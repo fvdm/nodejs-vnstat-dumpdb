@@ -1,0 +1,31 @@
+{
+  "author": {
+    "name":               "Franklin van de Meent",
+    "email":              "fr@nkl.in",
+    "url":                "http://frankl.in"
+  },
+  "name":                 "vnstat-dumpdb",
+  "description":          "Wrapper for vnStat --dumpdb, with error handling and the same output structure on each system",
+  "version":              "0.0.1",
+  "repository": {
+    "type":               "git",
+    "url":                "git://github.com/fvdm/nodejs-vnstat-dumpdb.git"
+  },
+  "bugs": {
+    "url":                "https://github.com/fvdm/nodejs-vnstat-dumpdb/issues"
+  },
+  "main":                 "vnstat-dumpdb.js",
+  "dependencies": {
+    "node-xml2json":      ">=1.0.0 <2.0.0"
+  },
+  "devDependencies":      {},
+  "optionalDependencies": {},
+  "engines": {
+    "node":               "*"
+  },
+  "keywords":             ["vnstat", "monitoring"],
+  "license": {
+    "type":               "Public Domain",
+    "url":                "https://github.com/fvdm/nodejs-vnstat-dumpdb/raw/master/UNLICENSE"
+  }
+}

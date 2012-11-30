@@ -28,7 +28,7 @@ The code on Github is the most recent version, but may be untested.
 
 ```
 git clone https://github.com/fvdm/nodejs-vnstat-dumpdb
-cd vnstat-dumpdb
+cd nodejs-vnstat-dumpdb
 npm install
 ```
 

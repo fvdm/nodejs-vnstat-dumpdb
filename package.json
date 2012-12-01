@@ -6,7 +6,7 @@
   },
   "name":                 "vnstat-dumpdb",
   "description":          "Wrapper for vnStat --dumpdb, with error handling and the same output structure on each system",
-  "version":              "1.0.0",
+  "version":              "1.0.1",
   "repository": {
     "type":               "git",
     "url":                "git://github.com/fvdm/nodejs-vnstat-dumpdb.git"

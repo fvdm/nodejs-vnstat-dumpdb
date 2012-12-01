@@ -37,23 +37,6 @@ var vnstat = require('/path/to/nodejs-vnstat-dumpdb')
 ```
 
 
-## Usage
-
-```js
-// load the module
-var vnstat = require('vnstat-dumpdb')
-
-// get them stats
-vnstat.dumpdb( function( err, data ) {
-	if( err instanceof Error ) {
-		console.log( err.message, err.stack )
-	} else {
-		console.log( require('util').inspect( data, false, 10 ) )
-	}
-})
-```
-
-
 ## Config
 
 You can change a few parameters to reflect your system. Defaults:
@@ -78,12 +61,30 @@ function( err, data ) {
 }
 ```
 
-Properties:
+
+### Properties:
 
 ```
 err.message   : the error message
 err.stack     : stack trace
 err.details   : other information when available
+```
+
+
+### Example:
+
+```js
+// load the module
+var vnstat = require('vnstat-dumpdb')
+
+// get them stats
+vnstat.dumpdb( function( err, data ) {
+	if( err instanceof Error ) {
+		console.log( err.message, err.stack )
+	} else {
+		console.log( require('util').inspect( data, false, 10 ) )
+	}
+})
 ```
 
 

@@ -7,31 +7,19 @@ Wrapper for vnStat --dumpdb, with error handling and the same output structure o
 
 ## Installation
 
+
 ### From NPM registry
 
 The NPM release is always the recent *stable* version.
 
-```
-npm install vnstat-dumpdb
-```
+	npm install vnstat-dumpdb
 
-```js
-var vnstat = require('vnstat-dumpdb')
-```
 
 ### From Github
 
 The code on Github is the most recent version, but may be untested.
 
-```
-git clone https://github.com/fvdm/nodejs-vnstat-dumpdb
-cd nodejs-vnstat-dumpdb
-npm install
-```
-
-```js
-var vnstat = require('/path/to/nodejs-vnstat-dumpdb')
-```
+	npm install git+https://github.com/fvdm/nodejs-vnstat-dumpdb
 
 
 ## Config

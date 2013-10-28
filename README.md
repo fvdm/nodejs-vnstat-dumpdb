@@ -7,9 +7,6 @@ Wrapper for vnStat --dumpdb, with error handling and the same output structure o
 
 ## Installation
 
-[![Build Status](https://secure.travis-ci.org/fvdm/nodejs-vnstat-dumpdb.png?branch=master)](http://travis-ci.org/fvdm/nodejs-vnstat-dumpdb)
-
-
 ### From NPM registry
 
 The NPM release is always the recent *stable* version.

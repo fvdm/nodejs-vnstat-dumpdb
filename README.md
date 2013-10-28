@@ -69,6 +69,55 @@ vnstat.dumpdb( function( err, data ) {
 })
 ```
 
+```js
+{ id: 'en1',
+  nick: 'en1',
+  created: { date: { year: 2012, month: 11, day: 21 } },
+  updated: 
+   { date: { year: 2013, month: 10, day: 28 },
+     time: { hour: 3, minute: 25 } },
+  traffic: 
+   { total: { rx: 593576855, tx: 63746811 },
+     days: 
+      [ { id: 0,
+          date: { year: 2013, month: 10, day: 28 },
+          rx: 4083261,
+          tx: 119674 },
+        { id: 1,
+          date: { year: 2013, month: 10, day: 27 },
+          rx: 2206367,
+          tx: 52314 },
+        ...
+      ],
+     months: 
+      [ { id: 0,
+          date: { year: 2013, month: 10 },
+          rx: 158176326,
+          tx: 7740561 },
+        { id: 1,
+          date: { year: 2013, month: 9 },
+          rx: 119230002,
+          tx: 3394278 },
+        ...
+      ],
+     tops: 
+      [ { id: 0,
+          date: { year: 2013, month: 10, day: 5 },
+          time: { hour: 0, minute: 10 },
+          rx: 22445455,
+          tx: 601967 },
+        { id: 1,
+          date: { year: 2013, month: 9, day: 23 },
+          time: { hour: 0, minute: 0 },
+          rx: 20201102,
+          tx: 461492 },
+        ...
+      ],
+      hours: []
+  }
+}
+```
+
 
 Unlicense / Public Domain
 -------------------------

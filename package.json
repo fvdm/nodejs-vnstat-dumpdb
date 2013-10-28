@@ -6,7 +6,7 @@
   },
   "name":                 "vnstat-dumpdb",
   "description":          "Wrapper for vnStat --dumpdb, with error handling and the same output structure on each system",
-  "version":              "1.0.1",
+  "version":              "1.0.2",
   "repository": {
     "type":               "git",
     "url":                "git://github.com/fvdm/nodejs-vnstat-dumpdb.git"
@@ -23,7 +23,7 @@
   "engines": {
     "node":               "*"
   },
-  "keywords":             ["vnstat", "monitoring"],
+  "keywords":             ["vnstat", "monitoring", "bandwidth"],
   "license": {
     "type":               "Public Domain",
     "url":                "https://github.com/fvdm/nodejs-vnstat-dumpdb/raw/master/UNLICENSE"

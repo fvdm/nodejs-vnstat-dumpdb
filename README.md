@@ -5,8 +5,8 @@ vnstat-dumpdb
 Wrapper for vnStat --dumpdb, with error handling and the same output structure on each system
 
 
-## Installation
-
+Installation
+------------
 
 ### From NPM registry
 
@@ -22,17 +22,17 @@ The code on Github is the most recent version, but may be untested.
 	npm install git+https://github.com/fvdm/nodejs-vnstat-dumpdb
 
 
-## Config
+Config
+------
 
 You can change a few parameters to reflect your system. Defaults:
 
-```
-vnstat.set.bin   = 'vnstat'  // set to your vnstat path
-vnstat.set.iface = ''        // empty: all interfaces, or eth0, en1, etc
-```
+	vnstat.set.bin   = 'vnstat'  // set to your vnstat path
+	vnstat.set.iface = ''        // empty: all interfaces, or eth0, en1, etc
 
 
-## dumpdb
+dumpdb
+------
 
 This method executes `vnstat --dumpdb --xml` and processes the output. It takes only a `callback` function. When everything seems alright `err` is null, otherwise `err` will be `instanceof Error` for tracing.
 
@@ -49,22 +49,19 @@ function( err, data ) {
 
 ### Properties:
 
-```
-err.message   : the error message
-err.stack     : stack trace
-err.details   : other information when available
-```
+	err.message   : the error message
+	err.stack     : stack trace
+	err.details   : other information when available
 
 
 ### Example:
 
 ```js
-// load the module
 var vnstat = require('vnstat-dumpdb')
 
-// get them stats
+// get the stats
 vnstat.dumpdb( function( err, data ) {
-	if( err instanceof Error ) {
+	if( err ) {
 		console.log( err.message, err.stack )
 	} else {
 		console.log( require('util').inspect( data, false, 10 ) )
@@ -74,8 +71,7 @@ vnstat.dumpdb( function( err, data ) {
 
 
 Unlicense / Public Domain
-=========================
-
+-------------------------
 
 This is free and unencumbered software released into the public domain.
 

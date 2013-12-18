@@ -54,7 +54,7 @@ function fixInterface( iface ) {
 	}
 	
 	// hours
-	iface.traffic.hours = iface.traffic.hour || []
+	iface.traffic.hours = iface.traffic.hours.hour || []
 	
 	// tops
 	if( !iface.traffic.tops.top ) {

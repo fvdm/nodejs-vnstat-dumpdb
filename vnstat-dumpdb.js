@@ -57,7 +57,7 @@ function fixInterface (iface) {
 }
 
 // --dumpdb
-module.exports = function (iface, callback) {
+function dumpdb (iface, callback) {
   if (typeof iface === 'function') {
     callback = iface;
     iface = set.iface;
@@ -99,4 +99,18 @@ module.exports = function (iface, callback) {
       callback (error, xml);
     }
   });
+};
+
+// Setup
+module.exports = function (setup) {
+  if (setup instanceof Object) {
+    for (var key in setup) {
+      set [key] = setup [key];
+    }
+  }
+
+  return {
+    dumpdb: dumpdb,
+    set: set
+  };
 };

@@ -35,9 +35,8 @@ function getConfig (callback) {
 // Get stats database
 function getDatabase (iface, callback) {
   var i;
-  var doIface = iface ? ' -i '+ iface : '';
 
-  exec (set.bin + doIface +' --dumpdb --json', function (err, json, stderr) {
+  exec (set.bin +' --dumpdb --json', function (err, json, stderr) {
     var error = null;
     if (err instanceof Error) {
       error = new Error (stderr.trim ());

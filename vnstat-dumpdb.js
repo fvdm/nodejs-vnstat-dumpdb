@@ -60,38 +60,41 @@ module.exports = function (iface, callback) {
     callback = iface;
     iface = set.iface;
   }
-
-  exec (set.bin + ' -i '+ iface +' --dumpdb --xml', function (error, xml, stderr) {
-    if (error instanceof Error) {
-      var err = new Error (stderr.trim ());
-      callback (err);
+  exec (set.bin +' -i '+ iface +' --dumpdb --xml', function (err, xml, stderr) {
+    var error = null;
+    if (err instanceof Error) {
+      error = new Error (stderr.trim ());
+      callback (error);
     }
 
-    xml = xml.trim ();
-    if (xml.substr (0, 8) == '<vnstat ') {
-      xml = xml2json.parser (xml);
-      if (xml.vnstat === undefined) {
-        callback (new Error ('invalid xml'));
+    try {
+      xml = xml2json.parser (xml.trim ());
+      if (!xml.vnstat) {
+        error = new Error ('invalid xml');
       } else {
         if (xml.vnstat.interface [0]) {
           // multiple
           var ifaces = {};
-          for (var i in xml.vnstat.interface) {
+          var i;
+          for (i = 0; i < xml.vnstat.interface.length; i++) {
             iface = fixInterface (xml.vnstat.interface [i]);
             ifaces [iface.id || iface.nick] = iface;
           }
-          callback (null, ifaces);
+          xml = ifaces;
         } else {
           // just one iface
-          callback (null, fixInterface (xml.vnstat.interface));
+          xml = fixInterface (xml.vnstat.interface);
         }
       }
-    } else {
-      var err = new Error ('not xml');
-      if (typeof xml === 'string') {
-        err.details = xml;
-      }
-      callback (err);
+    }
+    catch (e) {
+      error = new Error ('can not process');
+      error.details = xml || '';
+      error.error = e;
+      xml = null;
+    }
+    finally {
+      callback (error, xml);
     }
   });
 };

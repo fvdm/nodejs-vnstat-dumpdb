@@ -32,11 +32,15 @@ function getConfig (callback) {
   });
 }
 
-// Get stats database
-function getDatabase (iface, callback) {
+// Stats database
+function getStats (iface, callback) {
   var i;
+  if (typeof iface === 'function') {
+    callback = iface;
+    iface = set.iface;
+  }
 
-  exec (set.bin +' --dumpdb --json', function (err, json, stderr) {
+  exec (set.bin +' --json', function (err, json, stderr) {
     var error = null;
     if (err instanceof Error) {
       error = new Error (stderr.trim ());
@@ -46,44 +50,24 @@ function getDatabase (iface, callback) {
 
     try {
       json = JSON.parse (json);
-      if (iface) {
-        for (i = 0; i < json.interfaces.length; i++) {
-          if (json.interfaces [i] .id === iface) {
-            return callback (null, json.interfaces [i]);
-          }
-        }
-      } else {
-        callback (null, json.interfaces);
-      }
     }
     catch (e) {
       error = new Error ('invalid data');
       error.details = json;
-      callback (error);
+      return callback (error);
+    }
+
+    if (iface) {
+      for (i = 0; i < json.interfaces.length; i++) {
+        if (json.interfaces [i] .id === iface) {
+          return callback (null, json.interfaces [i]);
+        }
+      }
+      callback (new Error ('invalid interface'));
+    } else {
+      callback (null, json.interfaces);
     }
   });
-}
-
-// --dumpdb
-function getStats (iface, callback) {
-  if (typeof iface === 'function') {
-    callback = iface;
-    iface = set.iface;
-  }
-
-  iface = iface || set.config.Interface || null;
-
-  if (!iface) {
-    getConfig (function (err, data) {
-      if (!err) {
-        set.config = data;
-        iface = data.Interface;
-        getDatabase (iface, callback);
-      }
-    });
-  } else {
-    getDatabase (iface, callback);
-  }
 }
 
 // Setup

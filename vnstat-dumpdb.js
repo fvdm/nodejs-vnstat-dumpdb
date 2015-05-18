@@ -3,7 +3,8 @@ var xml2json = require ('node-xml2json');
 
 var set = {
   bin: 'vnstat',
-  iface: 'eth0'
+  iface: null,
+  config: {}
 };
 
 // Load config
@@ -82,12 +83,8 @@ function fixInterface (iface) {
   return iface;
 }
 
-// --dumpdb
-function dumpdb (iface, callback) {
-  if (typeof iface === 'function') {
-    callback = iface;
-    iface = set.iface;
-  }
+// Get database
+function getDatabase (iface, callback) {
   exec (set.bin +' -i '+ iface +' --dumpdb --xml', function (err, xml, stderr) {
     var error = null;
     if (err instanceof Error) {
@@ -126,7 +123,29 @@ function dumpdb (iface, callback) {
       callback (error, xml);
     }
   });
-};
+}
+
+// --dumpdb
+function dumpdb (iface, callback) {
+  if (typeof iface === 'function') {
+    callback = iface;
+    iface = set.iface;
+  }
+
+  iface = iface || set.config.Interface || null;
+
+  if (!iface) {
+    getConfig (function (err, data) {
+      if (!err) {
+        set.config = data;
+        iface = data.Interface;
+        getDatabase (iface, callback);
+      }
+    });
+  } else {
+    getDatabase (iface, callback);
+  }
+}
 
 // Setup
 module.exports = function (setup) {

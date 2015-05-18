@@ -22,7 +22,8 @@
     "node":               "*"
   },
   "scripts": {
-    "test":               "node test.js"
+    "test":               "node test.js",
+    "preinstall":         "node preinstall.js"
   },
   "keywords":             ["vnstat", "monitoring", "bandwidth"],
   "license": {

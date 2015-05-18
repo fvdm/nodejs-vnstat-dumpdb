@@ -43,13 +43,13 @@ function fixInterface (iface) {
   }
 
   // days
-  if (iface.traffic.days.day [0]) {
+  if (iface.traffic.days.day instanceof Array) {
     for (i = 0; i < iface.traffic.days.day.length; i++) {
       iface.traffic.days.day [i] .rx = iface.traffic.days.rx [i] || iface.traffic.days.day [i] .rx || 0;
       iface.traffic.days.day [i] .tx = iface.traffic.days.tx [i] || iface.traffic.days.day [i] .tx || 0;
     }
     iface.traffic.days = iface.traffic.days.day;
-  } else if (iface.traffic.days.day.id) {
+  } else {
     var day = iface.traffic.days.day;
     day.rx = iface.traffic.days.rx || iface.traffic.days.day.rx || 0;
     day.tx = iface.traffic.days.tx || iface.traffic.days.day.tx || 0;
@@ -57,13 +57,13 @@ function fixInterface (iface) {
   }
 
   // months
-  if (iface.traffic.months.month [0]) {
+  if (iface.traffic.months.month instanceof Array) {
     for (i = 0; i < iface.traffic.months.month.length; i++) {
       iface.traffic.months.month [i] .rx = iface.traffic.months.rx [i] || iface.traffic.months.month [i] .rx || 0;
       iface.traffic.months.month [i] .tx = iface.traffic.months.tx [i] || iface.traffic.months.month [i] .tx || 0;
     }
     iface.traffic.months = iface.traffic.months.month;
-  } else if (iface.traffic.months.month.id) {
+  } else {
     var month = iface.traffic.months.month;
     month.rx = iface.traffic.months.rx || 0;
     month.tx = iface.traffic.months.tx || 0;

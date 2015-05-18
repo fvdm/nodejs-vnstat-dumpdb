@@ -73,6 +73,7 @@ function dumpdb (iface, callback) {
       xml = xml2json.parser (xml.trim ());
       if (!xml.vnstat) {
         error = new Error ('invalid xml');
+        error.details = xml;
       } else {
         if (xml.vnstat.interface [0]) {
           // multiple

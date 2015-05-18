@@ -15,9 +15,7 @@
     "url":                "https://github.com/fvdm/nodejs-vnstat-dumpdb/issues"
   },
   "main":                 "vnstat-dumpdb.js",
-  "dependencies": {
-    "node-xml2json":      "1.x.x"
-  },
+  "dependencies":         {},
   "devDependencies":      {},
   "optionalDependencies": {},
   "engines": {

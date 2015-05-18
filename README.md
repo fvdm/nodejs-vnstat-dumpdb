@@ -2,83 +2,105 @@ vnstat-dumpdb
 =============
 
 
-Wrapper for vnStat --dumpdb, with error handling and the same output structure on each system
+Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
 
 
 Installation
 ------------
 
-### From NPM registry
+Make sure to use **vnStat v1.13** or later.
 
-The NPM release is always the recent *stable* version.
-
-	npm install vnstat-dumpdb
+`npm install vnstat-dumpdb`
 
 
-### From Github
-
-The code on Github is the most recent version, but may be untested.
-
-	npm install git+https://github.com/fvdm/nodejs-vnstat-dumpdb
-
-
-Config
-------
-
-You can change a few parameters to reflect your system. Defaults:
-
-	vnstat.set.bin   = 'vnstat'  // set to your vnstat path
-	vnstat.set.iface = ''        // empty: all interfaces, or eth0, en1, etc
-
-
-dumpdb
-------
-
-This method executes `vnstat --dumpdb --xml` and processes the output. It takes only a `callback` function. When everything seems alright `err` is null, otherwise `err` will be `instanceof Error` for tracing.
+Example
+-------
 
 ```js
-function( err, data ) {
-	if( err instanceof Error ) {
-		console.log( err )
-	} else {
-		console.log( data )
-	}
+var vnstat = require ('vnstat-dumpdb') ();
+
+// Get traffic per day
+vnstat.getStats ('eth0', function (err, data) {
+  if (err) { return console.log (err); }
+  console.log (data.traffic.days);
+});
+
+// Read config setting
+vnstat.getConfig (function (err, config) {
+  if (err) { return console.log (err); }
+  console.log ('Interfaces updating every '+ config.UpdateInterval +' minutes');
+});
+```
+
+
+Configuration
+-------------
+
+The module loads as a function to override the defaults:
+
+setting | type   | required | default | description
+--------|--------|----------|---------|----------------------
+bin     | string | no       | vnstat  | Path to vnstat binary
+iface   | string | no       |         | i.e. `eth0` or `false` to list all
+
+
+Callback & errors
+-----------------
+
+Each method below takes a callback _function_ which gets two arguments:
+
+* `err` - Instance of `Error` or `null`
+* `data` - Result `object` or not set when error
+
+```js
+function myCallback (err, data) {
+  if (err) {
+    console.log (err);
+    console.log (err.stack);
+    return;
+  }
+
+  console.log (data);
 }
 ```
 
 
-### Properties:
+#### Errors
 
-	err.message   : the error message
-	err.stack     : stack trace
-	err.details   : other information when available
+message           | description                       | additional
+------------------|-----------------------------------|---------------------------
+no config         | Can't load config for `getConfig` | `err.details`, `err.error`
+invalid data      | Can't read stats for `getStats`   | `err.details`
+invalid interface | `iface` is invalid or not set up  |
 
 
-### Example:
 
-```js
-var vnstat = require('vnstat-dumpdb')
+getStats ( [iface], callback )
+--------
 
-// get the stats
-vnstat.dumpdb( function( err, data ) {
-	if( err ) {
-		console.log( err.message, err.stack )
-	} else {
-		console.log( require('util').inspect( data, false, 10 ) )
-	}
-})
-```
+Get statistics for one, multiple or all interfaces.
+
+* One: `getStats ('eth0', callback)`
+* All: `getStats (false, callback)`
+
 
 ```js
+// Get traffic for interface en1
+vnstat.getStats ('en1', function (err, data) {
+  if (err) { return console.log (err); }
+  console.log (data);
+});
+
+// Output
 { id: 'en1',
   nick: 'en1',
   created: { date: { year: 2012, month: 11, day: 21 } },
-  updated: 
+  updated:
    { date: { year: 2013, month: 10, day: 28 },
      time: { hour: 3, minute: 25 } },
-  traffic: 
+  traffic:
    { total: { rx: 593576855, tx: 63746811 },
-     days: 
+     days:
       [ { id: 0,
           date: { year: 2013, month: 10, day: 28 },
           rx: 4083261,
@@ -89,7 +111,7 @@ vnstat.dumpdb( function( err, data ) {
           tx: 52314 },
         ...
       ],
-     months: 
+     months:
       [ { id: 0,
           date: { year: 2013, month: 10 },
           rx: 158176326,
@@ -100,7 +122,7 @@ vnstat.dumpdb( function( err, data ) {
           tx: 3394278 },
         ...
       ],
-     tops: 
+     tops:
       [ { id: 0,
           date: { year: 2013, month: 10, day: 5 },
           time: { hour: 0, minute: 10 },
@@ -117,6 +139,34 @@ vnstat.dumpdb( function( err, data ) {
   }
 }
 ```
+
+
+getConfig ( callback )
+---------
+
+Get vnStat configuration.
+
+```js
+vnstat.getConfig (function (err, config) {
+  if (err) { return console.log (err); }
+  console.log ('Interfaces updating every '+ config.UpdateInterval +' seconds');
+});
+```
+
+
+Testing and development
+-----------------------
+
+#### Testing
+
+`NODE_APP_IFACE=eth0 npm test`
+
+
+#### Development
+
+`npm install fvdm/nodejs-vnstat-dumpdb#develop`
+
+[Github repo](https://github.com/fvdm/nodejs-vnstat-dumpdb)
 
 
 Unlicense / Public Domain
@@ -146,3 +196,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org>
+
+
+Author
+------
+
+Franklin van de Meent
+| [Website](https://frankl.in)
+| [Github](https://github.com/fvdm)

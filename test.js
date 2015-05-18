@@ -105,7 +105,7 @@ queue.push (function () {
   app.getStats ('unreal-iface', function (err) {
     doTest (null, 'getStats error', [
       ['type', err instanceof Error],
-      ['message', err.message === 'invalid xml'],
+      ['message', err.message === 'invalid data'],
       ['details', !!~err.details.indexOf ('Unable to read database')]
     ]);
   });

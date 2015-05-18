@@ -5,14 +5,6 @@ vnstat-dumpdb
 Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
 
 
-Installation
-------------
-
-Make sure to use **vnStat v1.13** or later.
-
-`npm install vnstat-dumpdb`
-
-
 Example
 -------
 
@@ -31,6 +23,14 @@ vnstat.getConfig (function (err, config) {
   console.log ('Interfaces updating every '+ config.UpdateInterval +' minutes');
 });
 ```
+
+
+Installation
+------------
+
+Make sure to use **vnStat v1.13** or later.
+
+`npm install vnstat-dumpdb`
 
 
 Configuration

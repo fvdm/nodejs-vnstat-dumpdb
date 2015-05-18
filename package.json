@@ -23,6 +23,9 @@
   "engines": {
     "node":               "*"
   },
+  "scripts": {
+    "test":               "node test.js"
+  },
   "keywords":             ["vnstat", "monitoring", "bandwidth"],
   "license": {
     "type":               "Public Domain",

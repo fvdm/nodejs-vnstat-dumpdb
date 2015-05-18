@@ -5,7 +5,7 @@ before_install:
   - 'tar xvf vnstat_bin.tar'
   - 'sudo ./vnstatd -d'
   - 'sudo ./vnstat -u -i venet0'
-  - 'sudo cp -v ./vnstat /usr/bin/vnstat && chmod 755 $_'
+  - 'sudo cp -v ./vnstat /usr/bin/'
 node_js:
   - 'iojs-2.0'
   - 'iojs-1.8'

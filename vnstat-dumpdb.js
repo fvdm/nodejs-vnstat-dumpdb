@@ -126,7 +126,7 @@ function getDatabase (iface, callback) {
 }
 
 // --dumpdb
-function dumpdb (iface, callback) {
+function getStats (iface, callback) {
   if (typeof iface === 'function') {
     callback = iface;
     iface = set.iface;
@@ -156,7 +156,7 @@ module.exports = function (setup) {
   }
 
   return {
-    dumpdb: dumpdb,
+    getStats: getStats,
     getConfig: getConfig,
     set: set
   };

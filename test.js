@@ -84,8 +84,8 @@ queue.push (function () {
     doTest (err, 'getStats iface', [
       ['data type', typeof data === 'object'],
       ['id', data.id === app.set.config.Interface],
-      ['traffic.days type', data.traffic && data.traffic.days instanceof Array],
-      ['traffic.days item', data.traffic && typeof data.traffic.days [0] .rx === 'number']
+      ['traffic.days type', data.traffic.days && data.traffic.days instanceof Array],
+      ['traffic.days item', data.traffic.days && typeof data.traffic.days [0] .rx === 'number']
     ]);
   });
 });
@@ -95,8 +95,8 @@ queue.push (function () {
     doTest (err, 'getStats default', [
       ['data type', typeof data === 'object'],
       ['id', data.id === app.set.config.Interface],
-      ['traffic.days type', data.traffic && data.traffic.days instanceof Array],
-      ['traffic.days item', data.traffic && typeof data.traffic.days [0] .rx === 'number']
+      ['traffic.days type', data.traffic.days && data.traffic.days instanceof Array],
+      ['traffic.days item', data.traffic.days && typeof data.traffic.days [0] .rx === 'number']
     ]);
   });
 });

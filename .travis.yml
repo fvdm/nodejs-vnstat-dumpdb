@@ -4,8 +4,9 @@ before_install:
   - 'sudo apt-get -qq update'
   - 'sudo apt-get -yqq install colormake'
   - 'git clone https://github.com/vergoh/vnstat'
-  - 'cd vnstat && colormake && sudo colormake install'
-  - 'sudo vnstat -d'
+  - 'cd vnstat && colormake && sudo colormake install && sudo cp -v examples/init.d/debian/vnstat /etc/init.d/'
+  - 'sudo update-rc.d vnstat defaults'
+  - 'sudo service vnstat start'
 node_js:
   - 'iojs-2.0'
   - 'iojs-1.8'

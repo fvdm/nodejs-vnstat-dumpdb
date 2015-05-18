@@ -1,6 +1,5 @@
 var exec = require ('child_process') .exec;
 var xml2json = require ('node-xml2json');
-var util = require ('util');
 
 module.exports = {
   set: {

@@ -2,7 +2,9 @@ sudo: required
 language: node_js
 before_install:
   - 'sudo apt-get -qq update'
-  - 'sudo apt-get -yqq install vnstat'
+  - 'sudo apt-get -yqq install colormake'
+  - 'git clone https://github.com/vergoh/vnstat'
+  - 'cd vnstat && colormake && sudo colormake install'
   - 'sudo vnstat -u'
 node_js:
   - 'iojs-2.0'

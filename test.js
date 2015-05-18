@@ -80,7 +80,7 @@ queue.push (function () {
 
 queue.push (function () {
   app.getStats (app.set.iface, function (err, data) {
-    console.log (util.inspect (data, {depth:10, colors:true}));
+    console.log (util.inspect (err||data, {depth:10, colors:true}));
     doTest (err, 'getStats iface', [
       ['data type', typeof data === 'object'],
       ['id', data.id === app.set.config.Interface],

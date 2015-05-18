@@ -6,6 +6,32 @@ var set = {
   iface: 'eth0'
 };
 
+// Load config
+function getConfig (callback) {
+  exec (set.bin +' --showconfig', function (err, text, stderr) {
+    if (err) {
+      var error = new Error ('no config');
+      error.details = text;
+      error.error = err;
+      callback (error);
+    }
+
+    var config = {};
+    var i;
+
+    text = text.split ('\n');
+    for (i = 0; i < text.length; i++) {
+      var line = text [i] .trim ();
+      if (line.substr (0,1) != '#') {
+        line.replace (/(\w+)\s+(.+)/, function (s, key, val) {
+          config [key] = val.slice (0, 1) === '"' ? val.slice (1, -1) : val;
+        });
+      }
+    }
+    callback (null, config);
+  });
+}
+
 // parse interface
 function fixInterface (iface) {
   var i;
@@ -112,6 +138,7 @@ module.exports = function (setup) {
 
   return {
     dumpdb: dumpdb,
+    getConfig: getConfig,
     set: set
   };
 };

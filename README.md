@@ -4,6 +4,8 @@ vnstat-dumpdb
 
 Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
 
+[![Build Status](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb)
+
 
 Example
 -------

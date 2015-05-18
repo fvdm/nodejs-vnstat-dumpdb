@@ -3,7 +3,7 @@ var xml2json = require ('node-xml2json');
 
 var set = {
   bin: 'vnstat',
-  iface: ''
+  iface: 'eth0'
 };
 
 // parse interface

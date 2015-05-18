@@ -8,6 +8,8 @@ var set = {
 
 // parse interface
 function fixInterface (iface) {
+  var i;
+
   // id
   if (iface.id && iface.id [0]) {
     iface.id = iface.id [0];

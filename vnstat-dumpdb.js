@@ -1,11 +1,9 @@
 var exec = require ('child_process') .exec;
 var xml2json = require ('node-xml2json');
 
-module.exports = {
-  set: {
-    bin: 'vnstat',
-    iface: ''
-  }
+var set = {
+  bin: 'vnstat',
+  iface: ''
 };
 
 // parse interface
@@ -57,10 +55,13 @@ function fixInterface (iface) {
 }
 
 // --dumpdb
-module.exports.dumpdb = function (cb) {
-  var iface = module.exports.set.iface ? ' -i '+ module.exports.set.iface : '';
+module.exports = function (iface, cb) {
+  if (typeof iface === 'function') {
+    callback = iface;
+    iface = set.iface;
+  }
 
-  exec (module.exports.set.bin + iface +' --dumpdb --xml', function (error, xml, stderr) {
+  exec (set.bin + ' -i '+ iface +' --dumpdb --xml', function (error, xml, stderr) {
     if (error instanceof Error) {
       var err = new Error (stderr.trim ());
       cb (err);

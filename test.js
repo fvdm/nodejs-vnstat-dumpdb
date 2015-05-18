@@ -2,9 +2,7 @@ var util = require ('util');
 
 // Setup
 // $ NODE_APP_IFACE=eth0 npm test
-var app = require ('./') ({
- iface: process.env.NODE_APP_IFACE || null
-});
+var app = require ('./') ();
 
 
 // handle exits
@@ -68,7 +66,6 @@ function doTest (err, label, tests) {
   doNext ();
 }
 
-
 queue.push (function () {
   app.getConfig (function (err, data) {
     doTest (err, 'getConfig', [
@@ -79,24 +76,20 @@ queue.push (function () {
 });
 
 queue.push (function () {
-  app.getStats (app.set.iface, function (err, data) {
-    console.log (util.inspect (err||data, {depth:10, colors:true}));
+  app.getStats (process.env.NODE_APP_IFACE || 'eth0', function (err, data) {
     doTest (err, 'getStats iface', [
       ['data type', typeof data === 'object'],
-      ['id', data.id === app.set.config.Interface],
-      ['traffic.days type', data.traffic.days && data.traffic.days instanceof Array],
-      ['traffic.days item', data.traffic.days && typeof data.traffic.days [0] .rx === 'number']
+      ['id', typeof data.id === 'string'],
+      ['days type', data.traffic.days && data.traffic.days instanceof Array],
+      ['days item', data.traffic.days && typeof data.traffic.days [0] .rx === 'number']
     ]);
   });
 });
 
 queue.push (function () {
   app.getStats (function (err, data) {
-    doTest (err, 'getStats default', [
-      ['data type', typeof data === 'object'],
-      ['id', data.id === app.set.config.Interface],
-      ['traffic.days type', data.traffic.days && data.traffic.days instanceof Array],
-      ['traffic.days item', data.traffic.days && typeof data.traffic.days [0] .rx === 'number']
+    doTest (err, 'getStats all', [
+      ['data type', typeof data === 'object' && data instanceof Array]
     ]);
   });
 });
@@ -105,8 +98,7 @@ queue.push (function () {
   app.getStats ('unreal-iface', function (err) {
     doTest (null, 'getStats error', [
       ['type', err instanceof Error],
-      ['message', err.message === 'invalid data'],
-      ['details', !!~err.details.indexOf ('Unable to read database')]
+      ['message', err.message === 'invalid interface']
     ]);
   });
 });

@@ -3,7 +3,7 @@ language: node_js
 before_install:
   - 'wget https://frankl.in/u/vnstat_bin.tar'
   - 'tar xvf vnstat_bin.tar'
-  - 'vnstat_bin/vnstatd -d'
+  - './vnstatd -d'
 node_js:
   - 'iojs-2.0'
   - 'iojs-1.8'

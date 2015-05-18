@@ -55,7 +55,7 @@ function fixInterface (iface) {
 }
 
 // --dumpdb
-module.exports = function (iface, cb) {
+module.exports = function (iface, callback) {
   if (typeof iface === 'function') {
     callback = iface;
     iface = set.iface;
@@ -64,14 +64,14 @@ module.exports = function (iface, cb) {
   exec (set.bin + ' -i '+ iface +' --dumpdb --xml', function (error, xml, stderr) {
     if (error instanceof Error) {
       var err = new Error (stderr.trim ());
-      cb (err);
+      callback (err);
     }
 
     xml = xml.trim ();
     if (xml.substr (0, 8) == '<vnstat ') {
       xml = xml2json.parser (xml);
       if (xml.vnstat === undefined) {
-        cb (new Error ('invalid xml'));
+        callback (new Error ('invalid xml'));
       } else {
         if (xml.vnstat.interface [0]) {
           // multiple
@@ -80,10 +80,10 @@ module.exports = function (iface, cb) {
             iface = fixInterface (xml.vnstat.interface [i]);
             ifaces [iface.id || iface.nick] = iface;
           }
-          cb (null, ifaces);
+          callback (null, ifaces);
         } else {
           // just one iface
-          cb (null, fixInterface (xml.vnstat.interface));
+          callback (null, fixInterface (xml.vnstat.interface));
         }
       }
     } else {
@@ -91,7 +91,7 @@ module.exports = function (iface, cb) {
       if (typeof xml === 'string') {
         err.details = xml;
       }
-      cb (err);
+      callback (err);
     }
   });
 };

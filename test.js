@@ -23,7 +23,6 @@ process.on ('exit', function () {
 process.on ('uncaughtException', function (err) {
   console.log ();
   console.error (err.stack);
-  console.trace ();
   console.log ();
   errors++;
 });

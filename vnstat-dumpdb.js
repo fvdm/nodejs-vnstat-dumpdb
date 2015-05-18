@@ -71,7 +71,11 @@ function fixInterface (iface) {
   }
 
   // hours
-  iface.traffic.hours = iface.traffic.hours.hour || iface.traffic.hour || [];
+  if (iface.traffic.hours.hour instanceof Array) {
+    iface.traffic.hours = iface.traffic.hours.hour;
+  } else {
+    iface.traffic.hours = [iface.traffic.hours.hour];
+  }
 
   // tops
   if (!iface.traffic.tops.top) {

@@ -15,9 +15,9 @@ function fixInterface (iface) {
 
   // days
   if (iface.traffic.days.day [0]) {
-    for (var d in iface.traffic.days.day) {
-      iface.traffic.days.day [d] .rx = iface.traffic.days.rx [d] || iface.traffic.days.day [d] .rx || 0;
-      iface.traffic.days.day [d] .tx = iface.traffic.days.tx [d] || iface.traffic.days.day [d] .tx || 0;
+    for (i = 0; i < iface.traffic.days.day.length; i++) {
+      iface.traffic.days.day [i] .rx = iface.traffic.days.rx [i] || iface.traffic.days.day [i] .rx || 0;
+      iface.traffic.days.day [i] .tx = iface.traffic.days.tx [i] || iface.traffic.days.day [i] .tx || 0;
     }
     iface.traffic.days = iface.traffic.days.day;
   } else if (iface.traffic.days.day.id) {
@@ -29,9 +29,9 @@ function fixInterface (iface) {
 
   // months
   if (iface.traffic.months.month [0]) {
-    for (var m in iface.traffic.months.month) {
-      iface.traffic.months.month [m] .rx = iface.traffic.months.rx [m] || iface.traffic.months.month [m] .rx || 0;
-      iface.traffic.months.month [m] .tx = iface.traffic.months.tx [m] || iface.traffic.months.month [m] .tx || 0;
+    for (i = 0; i < iface.traffic.months.month.length; i++) {
+      iface.traffic.months.month [i] .rx = iface.traffic.months.rx [i] || iface.traffic.months.month [i] .rx || 0;
+      iface.traffic.months.month [i] .tx = iface.traffic.months.tx [i] || iface.traffic.months.month [i] .tx || 0;
     }
     iface.traffic.months = iface.traffic.months.month;
   } else if (iface.traffic.months.month.id) {

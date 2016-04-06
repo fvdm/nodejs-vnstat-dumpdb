@@ -25,9 +25,10 @@ var set = {
  */
 
 function getConfig (callback) {
-  exec (set.bin +' --showconfig', function (err, text, stderr) {
+  exec (set.bin + ' --showconfig', function (err, text) {
     var error = null;
     var config = {};
+    var line;
     var i;
 
     if (err) {
@@ -41,9 +42,9 @@ function getConfig (callback) {
     text = text.split ('\n');
 
     for (i = 0; i < text.length; i++) {
-      var line = text [i] .trim ();
+      line = text [i] .trim ();
 
-      if (line.substr (0,1) != '#') {
+      if (line.substr (0, 1) !== '#') {
         line.replace (/(\w+)\s+(.+)/, function (s, key, val) {
           config [key] = val.slice (0, 1) === '"' ? val.slice (1, -1) : val;
         });
@@ -94,7 +95,8 @@ function getStats (iface, callback) {
     if (iface) {
       for (i = 0; i < json.interfaces.length; i++) {
         if (json.interfaces [i] .id === iface) {
-          return callback (null, json.interfaces [i]);
+          callback (null, json.interfaces [i]);
+          return;
         }
       }
 

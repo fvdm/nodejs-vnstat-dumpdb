@@ -1,7 +1,6 @@
 vnstat-dumpdb
 =============
 
-
 Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
 
 [![Build Status](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb)
@@ -15,14 +14,22 @@ var vnstat = require ('vnstat-dumpdb') ();
 
 // Get traffic per day
 vnstat.getStats ('eth0', function (err, data) {
-  if (err) { return console.log (err); }
+  if (err) {
+    console.log (err);
+    return;
+  }
+
   console.log (data.traffic.days);
 });
 
 // Read config setting
 vnstat.getConfig (function (err, config) {
-  if (err) { return console.log (err); }
-  console.log ('Interfaces updating every '+ config.UpdateInterval +' minutes');
+  if (err) {
+    console.log (err);
+    return;
+  }
+
+  console.log ('Interfaces updating every ' + config.UpdateInterval + ' minutes');
 });
 ```
 
@@ -30,7 +37,7 @@ vnstat.getConfig (function (err, config) {
 Installation
 ------------
 
-Make sure to use **vnStat v1.13** or later.
+Make sure you have **vnStat v1.13** or later.
 
 `npm install vnstat-dumpdb`
 
@@ -82,16 +89,13 @@ getStats ( [iface], callback )
 
 Get statistics for one, multiple or all interfaces.
 
-* One: `getStats ('eth0', callback)`
-* All: `getStats (false, callback)`
+* One: `vnstat.getStats ('eth0', callback)`
+* All: `vnstat.getStats (false, callback)`
 
 
 ```js
 // Get traffic for interface en1
-vnstat.getStats ('en1', function (err, data) {
-  if (err) { return console.log (err); }
-  console.log (data);
-});
+vnstat.getStats ('en1', console.log);
 
 // Output
 { id: 'en1',
@@ -150,29 +154,18 @@ Get vnStat configuration.
 
 ```js
 vnstat.getConfig (function (err, config) {
-  if (err) { return console.log (err); }
-  console.log ('Interfaces updating every '+ config.UpdateInterval +' seconds');
+  if (err) {
+    console.log (err);
+    return;
+  }
+
+  console.log ('Interfaces updating every ' + config.UpdateInterval + ' seconds');
 });
 ```
 
 
-Testing and development
------------------------
-
-#### Testing
-
-`NODE_APP_IFACE=eth0 npm test`
-
-
-#### Development
-
-`npm install fvdm/nodejs-vnstat-dumpdb#develop`
-
-[Github repo](https://github.com/fvdm/nodejs-vnstat-dumpdb)
-
-
-Unlicense / Public Domain
--------------------------
+Unlicense
+---------
 
 This is free and unencumbered software released into the public domain.
 

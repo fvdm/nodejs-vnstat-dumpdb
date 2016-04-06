@@ -22,7 +22,7 @@ dotest.add ('Method .getConfig', function (test) {
       .isNotEmpty ('fail', 'data.DatabaseDir', data && data.DatabaseDir)
       .isNotEmpty ('fail', 'data.Interface', data && data.Interface)
       .done ();
-  })
+  });
 });
 
 dotest.add ('Method .getStats - iface', function (test) {

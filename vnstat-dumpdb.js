@@ -1,3 +1,12 @@
+/*
+Name:           vnstat-dumpdb
+Description:    Get vnStat data and config in Node.js
+Author:         Franklin van de Meent (https://frankl.in)
+Source & docs:  https://github.com/fvdm/nodejs-vnstat-dumpdb
+Feedback:       https://github.com/fvdm/nodejs-vnstat-dumpdb/issues
+License:        Unlicense (see UNLICENSE file)
+*/
+
 var exec = require ('child_process') .exec;
 
 var set = {
@@ -6,55 +15,80 @@ var set = {
   config: {}
 };
 
-// Load config
+
+/**
+ * Get vnStat config
+ *
+ * @callback callback
+ * @param callback {function} - `function (err, data) {}`
+ * @returns {void}
+ */
+
 function getConfig (callback) {
   exec (set.bin +' --showconfig', function (err, text, stderr) {
-    if (err) {
-      var error = new Error ('no config');
-      error.details = text;
-      error.error = err;
-      callback (error);
-    }
-
+    var error = null;
     var config = {};
     var i;
 
+    if (err) {
+      error = new Error ('no config');
+      error.details = text;
+      error.error = err;
+      callback (error);
+      return;
+    }
+
     text = text.split ('\n');
+
     for (i = 0; i < text.length; i++) {
       var line = text [i] .trim ();
+
       if (line.substr (0,1) != '#') {
         line.replace (/(\w+)\s+(.+)/, function (s, key, val) {
           config [key] = val.slice (0, 1) === '"' ? val.slice (1, -1) : val;
         });
       }
     }
+
     callback (null, config);
   });
 }
 
-// Stats database
+
+/**
+ * Get stats database
+ *
+ * @callback callback
+ * @param [iface] {string} - Limit data to one interface
+ * @param callback {function} - `function (err, data) {}`
+ * @returns {void}
+ */
+
 function getStats (iface, callback) {
   var i;
+
   if (typeof iface === 'function') {
     callback = iface;
     iface = set.iface;
   }
 
-  exec (set.bin +' --json', function (err, json, stderr) {
+  exec (set.bin + ' --json', function (err, json, stderr) {
     var error = null;
+
     if (err instanceof Error) {
       error = new Error (stderr.trim ());
       error.details = json;
-      return callback (error);
+      callback (error);
+      return;
     }
 
     try {
       json = JSON.parse (json);
-    }
-    catch (e) {
+    } catch (e) {
       error = new Error ('invalid data');
       error.details = json;
-      return callback (error);
+      callback (error);
+      return;
     }
 
     if (iface) {
@@ -63,17 +97,30 @@ function getStats (iface, callback) {
           return callback (null, json.interfaces [i]);
         }
       }
+
       callback (new Error ('invalid interface'));
-    } else {
-      callback (null, json.interfaces);
+      return;
     }
+
+    callback (null, json.interfaces);
   });
 }
 
-// Setup
+
+/**
+ * Configuration
+ *
+ * @param [setup] {object}
+ * @param [setup.bin] {string=vnstat} - Command of or path to vnstat binary
+ * @param [setup.iface] {string} - Select interface, defaults to all (null)
+ * @returns {object} - Module interface methods
+ */
+
 module.exports = function (setup) {
+  var key;
+
   if (setup instanceof Object) {
-    for (var key in setup) {
+    for (key in setup) {
       set [key] = setup [key];
     }
   }

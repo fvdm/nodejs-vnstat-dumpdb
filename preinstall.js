@@ -2,7 +2,7 @@ var exec = require ('child_process') .exec;
 
 console.log ('Checking vnStat requirement...');
 
-exec ('vnstat --version', function (err, res, stderr) {
+exec ('vnstat --version', function (err, res) {
   if (err) {
     throw err;
   }

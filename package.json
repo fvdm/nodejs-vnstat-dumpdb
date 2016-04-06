@@ -1,33 +1,36 @@
 {
   "author": {
-    "name":               "Franklin van de Meent",
-    "email":              "fr@nkl.in",
-    "url":                "https://frankl.in"
+    "name": "Franklin van de Meent",
+    "email": "fr@nkl.in",
+    "url": "https://frankl.in"
   },
-  "name":                 "vnstat-dumpdb",
-  "version":              "1.0.2",
-  "description":          "Get vnStat network traffic and configuration",
+  "name": "vnstat-dumpdb",
+  "version": "1.0.2",
+  "description": "Get vnStat network traffic and configuration",
   "repository": {
-    "type":               "git",
-    "url":                "git://github.com/fvdm/nodejs-vnstat-dumpdb.git"
+    "type": "git",
+    "url": "git://github.com/fvdm/nodejs-vnstat-dumpdb.git"
   },
   "bugs": {
-    "url":                "https://github.com/fvdm/nodejs-vnstat-dumpdb/issues"
+    "url": "https://github.com/fvdm/nodejs-vnstat-dumpdb/issues"
   },
-  "main":                 "vnstat-dumpdb.js",
-  "dependencies":         {},
-  "devDependencies":      {},
-  "optionalDependencies": {},
+  "main": "vnstat-dumpdb.js",
+  "dependencies": {},
+  "devDependencies": {
+    "dotest": "^1.5.0",
+    "eslint": "^2.7.0"
+  },
   "engines": {
-    "node":               "*"
+    "node": ">=0.12"
   },
   "scripts": {
-    "test":               "node test.js",
-    "preinstall":         "node preinstall.js"
+    "test": "eslint . && node test.js",
+    "preinstall": "node preinstall.js"
   },
-  "keywords":             ["vnstat", "monitoring", "bandwidth"],
-  "license": {
-    "type":               "Public Domain",
-    "url":                "https://github.com/fvdm/nodejs-vnstat-dumpdb/raw/master/UNLICENSE"
-  }
+  "keywords": [
+    "vnstat",
+    "monitoring", 
+    "bandwidth"
+  ],
+  "license": "Unlicense"
 }

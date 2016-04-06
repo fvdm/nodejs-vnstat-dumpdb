@@ -7,7 +7,7 @@ var vnstat = app ();
 
 
 dotest.add ('getConfig', function (test) {
-  app.getConfig (function (err, data) {
+  vnstat.getConfig (function (err, data) {
     test (err)
       .isObject ('fail', 'data', data)
       .isNotEmpty ('fail', 'data.DatabaseDir', data && data.DatabaseDir)
@@ -17,7 +17,7 @@ dotest.add ('getConfig', function (test) {
 });
 
 dotest.add ('getStats iface', function (test) {
-  app.getStats (process.env.NODE_APP_IFACE || 'eth0', function (err, data) {
+  vnstat.getStats (process.env.NODE_APP_IFACE || 'eth0', function (err, data) {
     var days = data && data.traffic && data.traffic.days;
     var rx = days && days [0] && days [0] .rx;
 
@@ -33,7 +33,7 @@ dotest.add ('getStats iface', function (test) {
 });
 
 dotest.add ('getStats all', function (test) {
-  app.getStats (function (err, data) {
+  vnstat.getStats (function (err, data) {
     test (err)
       .isArray ('fail', 'data', data)
       .done ();
@@ -41,7 +41,7 @@ dotest.add ('getStats all', function (test) {
 });
 
 dotest.add ('getStats error', function (test) {
-  app.getStats ('unreal-iface', function (err) {
+  vnstat.getStats ('unreal-iface', function (err) {
     test ()
       .isError ('fail', 'err', err)
       .isExactly ('fail', 'err.message', 'invalid interface')

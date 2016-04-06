@@ -53,7 +53,7 @@ dotest.add ('Method .getStats - error', function (test) {
   vnstat.getStats ('unreal-iface', function (err) {
     test ()
       .isError ('fail', 'err', err)
-      .isExactly ('fail', 'err.message', 'invalid interface')
+      .isExactly ('fail', 'err.message', err && err.message, 'invalid interface')
       .done ();
   });
 });

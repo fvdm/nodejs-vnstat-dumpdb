@@ -6,7 +6,6 @@ var app = require ('./');
 var vnstat = app ();
 
 
-dotest.add ('getConfig', function (test) {
 dotest.add ('Module', function (test) {
   test ()
     .isFunction ('fail', 'exports', app)
@@ -16,6 +15,7 @@ dotest.add ('Module', function (test) {
     .done ();
 });
 
+dotest.add ('Method .getConfig', function (test) {
   vnstat.getConfig (function (err, data) {
     test (err)
       .isObject ('fail', 'data', data)
@@ -25,7 +25,7 @@ dotest.add ('Module', function (test) {
   })
 });
 
-dotest.add ('getStats iface', function (test) {
+dotest.add ('Method .getStats - iface', function (test) {
   vnstat.getStats (process.env.NODE_APP_IFACE || 'eth0', function (err, data) {
     var days = data && data.traffic && data.traffic.days;
     var rx = days && days [0] && days [0] .rx;
@@ -41,7 +41,7 @@ dotest.add ('getStats iface', function (test) {
   });
 });
 
-dotest.add ('getStats all', function (test) {
+dotest.add ('Method .getStats - all', function (test) {
   vnstat.getStats (function (err, data) {
     test (err)
       .isArray ('fail', 'data', data)
@@ -49,7 +49,7 @@ dotest.add ('getStats all', function (test) {
   });
 });
 
-dotest.add ('getStats error', function (test) {
+dotest.add ('Method .getStats - error', function (test) {
   vnstat.getStats ('unreal-iface', function (err) {
     test ()
       .isError ('fail', 'err', err)

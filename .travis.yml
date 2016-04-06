@@ -9,10 +9,7 @@ before_install:
   - 'sudo ./vnstat -u -i venet0'
   - 'sudo cp -v ./vnstat /usr/bin/'
 node_js:
-  - 'iojs-2.0'
-  - 'iojs-1.8'
-  - 'iojs-1.7'
+  - '5'
+  - '4'
   - '0.12'
-  - '0.11'
-  - '0.10'
-  - '0.8'
+ 

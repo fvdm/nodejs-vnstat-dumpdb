@@ -7,6 +7,15 @@ var vnstat = app ();
 
 
 dotest.add ('getConfig', function (test) {
+dotest.add ('Module', function (test) {
+  test ()
+    .isFunction ('fail', 'exports', app)
+    .isObject ('fail', 'interface', vnstat)
+    .isFunction ('fail', '.getConfig', vnstat && vnstat.getConfig)
+    .isFunction ('fail', '.getStats', vnstat && vnstat.getStats)
+    .done ();
+});
+
   vnstat.getConfig (function (err, data) {
     test (err)
       .isObject ('fail', 'data', data)

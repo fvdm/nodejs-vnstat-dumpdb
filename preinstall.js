@@ -9,7 +9,6 @@ exec ('vnstat --version', function (err, res) {
 
   res.replace (/^vnStat (\d+)\.(\d+) /, function (s, major, minor) {
     if (major >= 1 && minor >= 13) {
-      console.log ('vnStat correct');
       return;
     }
 

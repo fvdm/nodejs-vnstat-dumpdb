@@ -17,6 +17,26 @@ var set = {
 
 
 /**
+ * Make and callback an error
+ *
+ * @callback callback
+ * @param message {string} - Error.message
+ * @param err {Error, null} - Error.error
+ * @param details {mixed} - Error.details
+ * @param callback {function} - `function (err) {}`
+ * @returns {void}
+ */
+
+function doError (message, err, details, callback) {
+  var error = new Error (message);
+
+  error.error = err;
+  error.details = details;
+  callback (error);
+}
+
+
+/**
  * Get vnStat config
  *
  * @callback callback
@@ -32,10 +52,7 @@ function getConfig (callback) {
     var i;
 
     if (err) {
-      error = new Error ('no config');
-      error.details = text;
-      error.error = err;
-      callback (error);
+      doError ('no config', err, text, callback);
       return;
     }
 
@@ -77,18 +94,14 @@ function getStats (iface, callback) {
     var error = null;
 
     if (err instanceof Error) {
-      error = new Error (stderr.trim ());
-      error.details = json;
-      callback (error);
+      doError (stderr.trim (), err, json, callback);
       return;
     }
 
     try {
       json = JSON.parse (json);
     } catch (e) {
-      error = new Error ('invalid data');
-      error.details = json;
-      callback (error);
+      doError ('invalid data', e, json, callback);
       return;
     }
 

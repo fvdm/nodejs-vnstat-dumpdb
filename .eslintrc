@@ -1,6 +1,7 @@
 {
-  "ecmaFeatures": {
-    "modules": true
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
   },
 
   "env": {
@@ -58,6 +59,7 @@
     "no-alert": 2,
     "no-caller": 2,
     "no-catch-shadow": 2,
+    "no-console": 1,
     "no-delete-var": 2,
     "no-div-regex": 2,
     "no-duplicate-case": 2,
@@ -127,11 +129,7 @@
     }],
     "one-var": [2, "never"],
     "operator-assignment": [2, "always"],
-    "operator-linebreak": [2, "none", {
-      "overrides": {
-        "+": "before"
-      }
-    }],
+    "operator-linebreak": [2, "before"],
     "padded-blocks": [2, "never"],
     "quote-props": [2, "consistent"],
     "quotes": [2, "single", "avoid-escape"],

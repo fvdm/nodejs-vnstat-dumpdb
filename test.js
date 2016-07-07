@@ -31,7 +31,7 @@ dotest.add ('Method .getConfig', function (test) {
 });
 
 dotest.add ('Method .getStats - iface', function (test) {
-  vnstat.getStats (config.iface, function (err, data) {
+  vnstat.getStats (function (err, data) {
     var days = data && data.traffic && data.traffic.days;
     var rx = days && days [0] && days [0] .rx;
 
@@ -47,7 +47,7 @@ dotest.add ('Method .getStats - iface', function (test) {
 });
 
 dotest.add ('Method .getStats - all', function (test) {
-  vnstat.getStats (function (err, data) {
+  vnstat.getStats (null, function (err, data) {
     test (err)
       .isArray ('fail', 'data', data)
       .done ();

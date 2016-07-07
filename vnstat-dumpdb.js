@@ -4,7 +4,7 @@ Description:    Get vnStat data and config in Node.js
 Author:         Franklin van de Meent (https://frankl.in)
 Source & docs:  https://github.com/fvdm/nodejs-vnstat-dumpdb
 Feedback:       https://github.com/fvdm/nodejs-vnstat-dumpdb/issues
-License:        Unlicense (see UNLICENSE file)
+License:        Unlicense (see LICENSE file)
 */
 
 var exec = require ('child_process') .exec;

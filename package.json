@@ -21,14 +21,16 @@
   ],
   "dependencies": {},
   "devDependencies": {
+    "coveralls": "^2.11.9",
     "dotest": "^1.12.4",
-    "eslint": "^3.0.1"
+    "eslint": "^3.0.1",
+    "istanbul": "^0.4.4"
   },
   "engines": {
     "node": ">=4.0.0"
   },
   "scripts": {
-    "test": "st=0; eslint . || st=1; node test.js || st=1; exit $st",
+    "test": "bash test.sh",
     "preinstall": "node preinstall.js"
   },
   "keywords": [

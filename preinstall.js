@@ -1,8 +1,8 @@
 var exec = require ('child_process') .exec;
 
-console.log ('Checking vnStat requirement...');
+var bin = process.env.NODE_APP_BIN || 'vnstat';
 
-exec ('vnstat --version', function (err, res) {
+exec (bin + ' --version', function (err, res) {
   if (err) {
     throw err;
   }
@@ -13,6 +13,7 @@ exec ('vnstat --version', function (err, res) {
     }
 
     console.log ('Wrong vnStat version: requires >= v1.13, but v' + major + '.' + minor + ' installed');
+    console.log ('Command run: ' + bin);
     process.exit (1);
   });
 });

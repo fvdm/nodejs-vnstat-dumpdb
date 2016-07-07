@@ -3,8 +3,12 @@ var app = require ('./');
 
 // Setup
 // $ NODE_APP_IFACE=eth0 npm test
-var vnstat = app ();
-var iface = process.env.NODE_APP_IFACE || 'eth0';
+var config = {
+  bin: process.env.NODE_APP_BIN || null,
+  iface: process.env.NODE_APP_IFACE || null
+};
+
+var vnstat = app (config);
 
 
 dotest.add ('Module', function (test) {
@@ -27,7 +31,7 @@ dotest.add ('Method .getConfig', function (test) {
 });
 
 dotest.add ('Method .getStats - iface', function (test) {
-  vnstat.getStats (iface, function (err, data) {
+  vnstat.getStats (config.iface, function (err, data) {
     var days = data && data.traffic && data.traffic.days;
     var rx = days && days [0] && days [0] .rx;
 

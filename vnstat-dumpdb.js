@@ -46,7 +46,6 @@ function doError (message, err, details, callback) {
 
 function getConfig (callback) {
   exec (set.bin + ' --showconfig', function (err, text) {
-    var error = null;
     var config = {};
     var line;
     var i;
@@ -91,8 +90,6 @@ function getStats (iface, callback) {
   }
 
   exec (set.bin + ' --json', function (err, json, stderr) {
-    var error = null;
-
     if (err instanceof Error) {
       doError (stderr.trim (), err, json, callback);
       return;

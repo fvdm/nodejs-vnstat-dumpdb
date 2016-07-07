@@ -119,12 +119,9 @@ function getStats (iface, callback) {
  */
 
 module.exports = function (setup) {
-  var key;
-
   if (setup instanceof Object) {
-    for (key in setup) {
-      set [key] = setup [key];
-    }
+    set.bin = setup.bin || set.bin;
+    set.iface = setup.iface || set.iface;
   }
 
   return {

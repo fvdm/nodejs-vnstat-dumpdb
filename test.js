@@ -4,9 +4,10 @@ var app = require ('./');
 // Setup
 // $ NODE_APP_IFACE=eth0 npm test
 var config = {
-  bin: process.env.NODE_APP_BIN || null,
-  iface: process.env.NODE_APP_IFACE || null
+  bin: process.env.NODE_APP_BIN || null
 };
+
+var iface = process.env.NODE_APP_BIN || 'eth0';
 
 var vnstat = app (config);
 
@@ -31,7 +32,7 @@ dotest.add ('Method .getConfig', function (test) {
 });
 
 dotest.add ('Method .getStats - iface', function (test) {
-  vnstat.getStats (function (err, data) {
+  vnstat.getStats (iface, function (err, data) {
     var days = data && data.traffic && data.traffic.days;
     var rx = days && days [0] && days [0] .rx;
 
@@ -47,7 +48,7 @@ dotest.add ('Method .getStats - iface', function (test) {
 });
 
 dotest.add ('Method .getStats - all', function (test) {
-  vnstat.getStats (null, function (err, data) {
+  vnstat.getStats (function (err, data) {
     test (err)
       .isArray ('fail', 'data', data)
       .done ();

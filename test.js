@@ -22,17 +22,18 @@ dotest.add ('Module', function (test) {
 });
 
 dotest.add ('Method .getConfig', function (test) {
-  vnstat.getConfig (function (err, data) {
+  var result = vnstat.getConfig (function (err, data) {
     test (err)
       .isObject ('fail', 'data', data)
       .isNotEmpty ('fail', 'data.DatabaseDir', data && data.DatabaseDir)
       .isNotEmpty ('fail', 'data.Interface', data && data.Interface)
+      .isObject ('fail', 'return', result)
       .done ();
   });
 });
 
 dotest.add ('Method .getStats - iface', function (test) {
-  vnstat.getStats (iface, function (err, data) {
+  var result = vnstat.getStats (iface, function (err, data) {
     var days = data && data.traffic && data.traffic.days;
     var rx = days && days [0] && days [0] .rx;
 
@@ -43,50 +44,59 @@ dotest.add ('Method .getStats - iface', function (test) {
       .isArray ('fail', 'data.traffic.days', days)
       .isObject ('fail', 'data.traffic.days[0]', days && days [0])
       .isNumber ('fail', 'data.traffic.days[0].rx', rx)
+      .isObject ('fail', 'return', result)
       .done ();
   });
 });
 
 dotest.add ('Method .getStats - all', function (test) {
-  vnstat.getStats (function (err, data) {
+  var result = vnstat.getStats (function (err, data) {
     test (err)
       .isArray ('fail', 'data', data)
+      .isArray ('fail', 'return', result)
       .done ();
   });
 });
 
 dotest.add ('Error: invalid interface', function (test) {
-  vnstat.getStats ('unreal-iface', function (err, data) {
+  var result = vnstat.getStats ('unreal-iface', function (err, data) {
     test ()
       .isError ('fail', 'err', err)
       .isExactly ('fail', 'err.message', err && err.message, 'invalid interface')
       .isUndefined ('fail', 'data', data)
+      .isError ('fail', 'return', result)
       .done ();
   });
 });
 
 dotest.add ('Error: no config', function (test) {
+  var result;
+
   config.bin = '-';
   vnstat = app (config);
 
-  vnstat.getConfig (function (err, data) {
+  result = vnstat.getConfig (function (err, data) {
     test ()
       .isError ('fail', 'err', err)
       .isExactly ('fail', 'err.message', err && err.message, 'no config')
       .isUndefined ('fail', 'data', data)
+      .isError ('fail', 'return', result)
       .done ();
   });
 });
 
 dotest.add ('Error: command failed', function (test) {
+  var result;
+
   config.bin = '-';
   vnstat = app (config);
 
-  vnstat.getStats (function (err, data) {
+  result = vnstat.getStats (function (err, data) {
     test ()
       .isError ('fail', 'err', err)
       .isExactly ('fail', 'err.message', err && err.message, 'command failed')
       .isUndefined ('fail', 'data', data)
+      .isError ('fail', 'return', result)
       .done ();
   });
 });

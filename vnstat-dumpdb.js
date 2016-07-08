@@ -91,7 +91,8 @@ function getStats (iface, callback) {
 
   exec (set.bin + ' --json', function (err, json, stderr) {
     if (err) {
-      doError (stderr.trim (), err, json, callback);
+      err.stderr = stderr;
+      doError ('command failed', err, json, callback);
       return;
     }
 

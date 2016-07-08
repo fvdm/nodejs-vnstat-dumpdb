@@ -55,11 +55,38 @@ dotest.add ('Method .getStats - all', function (test) {
   });
 });
 
-dotest.add ('Method .getStats - error', function (test) {
-  vnstat.getStats ('unreal-iface', function (err) {
+dotest.add ('Error: invalid interface', function (test) {
+  vnstat.getStats ('unreal-iface', function (err, data) {
     test ()
       .isError ('fail', 'err', err)
       .isExactly ('fail', 'err.message', err && err.message, 'invalid interface')
+      .isUndefined ('fail', 'data', data)
+      .done ();
+  });
+});
+
+dotest.add ('Error: no config', function (test) {
+  config.bin = '-';
+  vnstat = app (config);
+
+  vnstat.getConfig (function (err, data) {
+    test ()
+      .isError ('fail', 'err', err)
+      .isExactly ('fail', 'err.message', err && err.message, 'no config')
+      .isUndefined ('fail', 'data', data)
+      .done ();
+  });
+});
+
+dotest.add ('Error: command failed', function (test) {
+  config.bin = '-';
+  vnstat = app (config);
+
+  vnstat.getStats (function (err, data) {
+    test ()
+      .isError ('fail', 'err', err)
+      .isExactly ('fail', 'err.message', err && err.message, 'command failed')
+      .isUndefined ('fail', 'data', data)
       .done ();
   });
 });

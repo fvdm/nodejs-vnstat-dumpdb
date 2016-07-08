@@ -90,7 +90,7 @@ function getStats (iface, callback) {
   }
 
   exec (set.bin + ' --json', function (err, json, stderr) {
-    if (err instanceof Error) {
+    if (err) {
       doError (stderr.trim (), err, json, callback);
       return;
     }

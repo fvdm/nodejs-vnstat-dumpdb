@@ -24,7 +24,7 @@ var set = {
  * @param err {Error, null} - Error.error
  * @param details {mixed} - Error.details
  * @param callback {function} - `function (err) {}`
- * @returns {void}
+ * @returns {Error}
  */
 
 function doError (message, err, details, callback) {
@@ -33,6 +33,7 @@ function doError (message, err, details, callback) {
   error.error = err;
   error.details = details;
   callback (error);
+  return error;
 }
 
 
@@ -41,7 +42,7 @@ function doError (message, err, details, callback) {
  *
  * @callback callback
  * @param callback {function} - `function (err, data) {}`
- * @returns {void}
+ * @returns {Error, object}
  */
 
 function getConfig (callback) {
@@ -51,8 +52,7 @@ function getConfig (callback) {
     var i;
 
     if (err) {
-      doError ('no config', err, text, callback);
-      return;
+      return doError ('no config', err, text, callback);
     }
 
     text = text.split ('\n');
@@ -68,6 +68,7 @@ function getConfig (callback) {
     }
 
     callback (null, config);
+    return config;
   });
 }
 
@@ -78,7 +79,7 @@ function getConfig (callback) {
  * @callback callback
  * @param [iface] {string} - Limit data to one interface
  * @param callback {function} - `function (err, data) {}`
- * @returns {void}
+ * @returns {Error, object, array}
  */
 
 function getStats (iface, callback) {
@@ -92,30 +93,28 @@ function getStats (iface, callback) {
   exec (set.bin + ' --json', function (err, json, stderr) {
     if (err) {
       err.stderr = stderr;
-      doError ('command failed', err, json, callback);
-      return;
+      return doError ('command failed', err, json, callback);
     }
 
     try {
       json = JSON.parse (json);
     } catch (e) {
-      doError ('invalid data', e, json, callback);
-      return;
+      return doError ('invalid data', e, json, callback);
     }
 
     if (iface) {
       for (i = 0; i < json.interfaces.length; i++) {
         if (json.interfaces [i] .id === iface) {
           callback (null, json.interfaces [i]);
-          return;
+          return json.interfaces [i];
         }
       }
 
-      doError ('invalid interface', { iface }, json, callback);
-      return;
+      return doError ('invalid interface', { iface }, json, callback);
     }
 
     callback (null, json.interfaces);
+    return json.interfaces;
   });
 }
 

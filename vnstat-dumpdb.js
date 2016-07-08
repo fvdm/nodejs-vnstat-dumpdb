@@ -107,6 +107,7 @@ function getStats (iface, callback) {
       for (i = 0; i < json.interfaces.length; i++) {
         if (json.interfaces [i] .id === iface) {
           callback (null, json.interfaces [i]);
+          return;
         }
       }
 

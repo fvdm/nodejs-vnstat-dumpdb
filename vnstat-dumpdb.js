@@ -110,7 +110,7 @@ function getStats (iface, callback) {
         }
       }
 
-      callback (new Error ('invalid interface'));
+      doError ('invalid interface', { iface }, json, callback);
       return;
     }
 

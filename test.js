@@ -7,7 +7,7 @@ var config = {
   bin: process.env.NODE_APP_BIN || null
 };
 
-var iface = process.env.NODE_APP_BIN || 'eth0';
+var iface = process.env.NODE_APP_IFACE || 'eth0';
 
 var vnstat = app (config);
 

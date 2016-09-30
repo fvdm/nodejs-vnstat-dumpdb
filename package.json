@@ -32,6 +32,8 @@
   "keywords": [
     "bandwidth",
     "monitoring",
+    "network",
+    "statistics",
     "vnstat"
   ],
   "license": "Unlicense"

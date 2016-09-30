@@ -16,8 +16,7 @@
   },
   "main": "vnstat-dumpdb.js",
   "files": [
-    "preinstall.js",
-    "UNLICENSE"
+    "preinstall.js"
   ],
   "dependencies": {},
   "devDependencies": {

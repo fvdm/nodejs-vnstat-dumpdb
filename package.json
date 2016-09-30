@@ -30,9 +30,9 @@
     "preinstall": "node preinstall.js"
   },
   "keywords": [
-    "vnstat",
+    "bandwidth",
     "monitoring",
-    "bandwidth"
+    "vnstat"
   ],
   "license": "Unlicense"
 }

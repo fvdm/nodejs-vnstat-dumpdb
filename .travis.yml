@@ -8,5 +8,6 @@ before_install:
   - 'sudo ./vnstatd -d'
   - 'sudo ./vnstat -u -i $NODE_APP_IFACE'
 node_js:
-  - 'node'
-  - '--lts'
+  - '4'
+  - '6'
+  - '7'

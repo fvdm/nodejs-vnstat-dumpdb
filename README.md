@@ -1,6 +1,8 @@
 vnstat-dumpdb
 =============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fvdm/nodejs-vnstat-dumpdb.svg)](https://greenkeeper.io/)
+
 Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
 
 [![npm](https://img.shields.io/npm/v/vnstat-dumpdb.svg?maxAge=3600)](https://github.com/fvdm/nodejs-vnstat-dumpdb/blob/master/CHANGELOG.md)

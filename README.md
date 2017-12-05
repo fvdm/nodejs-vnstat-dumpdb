@@ -7,6 +7,7 @@ Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
 [![Build Status](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb)
 [![Dependency Status](https://gemnasium.com/badges/github.com/fvdm/nodejs-vnstat-dumpdb.svg)](https://gemnasium.com/github.com/fvdm/nodejs-vnstat-dumpdb#runtime-dependencies)
 [![Coverage Status](https://coveralls.io/repos/github/fvdm/nodejs-vnstat-dumpdb/badge.svg?branch=master)](https://coveralls.io/github/fvdm/nodejs-vnstat-dumpdb?branch=master)
+[![Greenkeeper badge](https://badges.greenkeeper.io/fvdm/nodejs-vnstat-dumpdb.svg)](https://greenkeeper.io/)
 
 
 Example

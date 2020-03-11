@@ -1,3 +1,4 @@
+const MINIMUM_SUPPORTED_VERSION = 1.13;
 var exec = require ('child_process') .exec;
 
 var bin = process.env.NODE_APP_BIN || 'vnstat';
@@ -7,8 +8,8 @@ exec (bin + ' --version', function (err, res) {
     throw err;
   }
 
-  res.replace (/^vnStat (\d+)\.(\d+) /, function (s, major, minor) {
-    if (major >= 1 && minor >= 13) {
+  res.replace (/vnStat\ (\d+\.\d+)/, function (s, version) {
+    if (version >= MINIMUM_SUPPORTED_VERSION) {
       return;
     }
 

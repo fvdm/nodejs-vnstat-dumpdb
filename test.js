@@ -1,15 +1,15 @@
-var dotest = require ('dotest');
-var app = require ('./');
+const dotest = require ('dotest');
+const app = require ('./');
 
 // Setup
 // $ NODE_APP_IFACE=eth0 npm test
-var config = {
+let config = {
   bin: process.env.NODE_APP_BIN || null,
 };
 
-var iface = process.env.NODE_APP_IFACE || 'eth0';
+let iface = process.env.NODE_APP_IFACE || 'eth0';
 
-var vnstat = app (config);
+let vnstat = new app (config);
 
 
 dotest.add ('Module', test => {
@@ -100,7 +100,7 @@ dotest.add ('Error: invalid interface', async test => {
 
 dotest.add ('Error: no config', async test => {
   config.bin = '-';
-  vnstat = app (config);
+  vnstat = new app (config);
 
   try {
     const data = async vnstat.getConfig();
@@ -122,7 +122,7 @@ dotest.add ('Error: no config', async test => {
 
 dotest.add ('Error: command failed', async test => {
   config.bin = '-';
-  vnstat = app (config);
+  vnstat = new app (config);
 
   try {
     const data = await vnstat.getStats();

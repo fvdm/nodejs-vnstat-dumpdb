@@ -1,19 +1,13 @@
-var exec = require ('child_process') .exec;
+const { exec } = require ('child_process');
 
-var bin = process.env.NODE_APP_BIN || 'vnstat';
+const bin = process.env.NODE_APP_BIN || 'vnstat';
 
-exec (bin + ' --version', function (err, res) {
-  if (err) {
-    throw err;
-  }
+exec (`${bin} --version`, (err, res) => {
+  res.replace (/^vnStat (\d+\.\d+)/, (s, version) => {
+    if (version >= 1.13) return;
 
-  res.replace (/^vnStat (\d+)\.(\d+) /, function (s, major, minor) {
-    if (major >= 1 && minor >= 13) {
-      return;
-    }
-
-    console.log ('Wrong vnStat version: requires >= v1.13, but v' + major + '.' + minor + ' installed');
-    console.log ('Command run: ' + bin);
+    console.log (`Wrong vnStat version: requires >= v1.13, but v${major}.${minor} installed`);
+    console.log (`Command run: ${bin}`);
     process.exit (1);
   });
 });

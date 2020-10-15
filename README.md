@@ -1,40 +1,31 @@
 vnstat-dumpdb
 =============
 
-Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
+Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat). All methods return promises.
 
 [![npm](https://img.shields.io/npm/v/vnstat-dumpdb.svg?maxAge=3600)](https://github.com/fvdm/nodejs-vnstat-dumpdb/blob/master/CHANGELOG.md)
 [![Build Status](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb)
-[![Dependency Status](https://gemnasium.com/badges/github.com/fvdm/nodejs-vnstat-dumpdb.svg)](https://gemnasium.com/github.com/fvdm/nodejs-vnstat-dumpdb#runtime-dependencies)
 [![Coverage Status](https://coveralls.io/repos/github/fvdm/nodejs-vnstat-dumpdb/badge.svg?branch=master)](https://coveralls.io/github/fvdm/nodejs-vnstat-dumpdb?branch=master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/fvdm/nodejs-vnstat-dumpdb.svg)](https://greenkeeper.io/)
 
 
 Example
 -------
 
 ```js
-var vnstat = require ('vnstat-dumpdb') ();
+const vnStatDumpDb = require ('vnstat-dumpdb');
+const vnstat = new vnStatDumpDb();
 
 // Get traffic per day
-vnstat.getStats ('eth0', function (err, data) {
-  if (err) {
-    console.log (err);
-    return;
-  }
-
-  console.log (data.traffic.days);
-});
+vnstat.getStats ({ iface: 'eth0' })
+.then (data => console.log (data.traffic.days))
+.catch (console.error);
 
 // Read config setting
-vnstat.getConfig (function (err, config) {
-  if (err) {
-    console.log (err);
-    return;
-  }
-
-  console.log ('Interfaces updating every ' + config.UpdateInterval + ' minutes');
-});
+vnstat.getConfig()
+.then (config => {
+  console.log (`Interfaces updating every ${config.updateInterval} minutes`);
+})
+.catch (console.error);
 ```
 
 
@@ -51,55 +42,24 @@ Configuration
 
 The module loads as a function to override the defaults:
 
-setting | type   | required | default | description
---------|--------|----------|---------|----------------------
-bin     | string | no       | vnstat  | Path to vnstat binary
-iface   | string | no       |         | i.e. `eth0` or `false` to list all
+setting | type   | default  | description
+:-------|:-------|:---------|:-----------
+[bin]   | string | 'vnstat' | Path to vnstat binary
+[iface] | string | null     | Limit to interface: `eth0`
 
 
-Callback & errors
------------------
-
-Each method below takes a callback _function_ which gets two arguments:
-
-* `err` - Instance of `Error` or `null`
-* `data` - Result `object` or not set when error
-
-```js
-function myCallback (err, data) {
-  if (err) {
-    console.log (err);
-    console.log (err.stack);
-    return;
-  }
-
-  console.log (data);
-}
-```
-
-
-#### Errors
-
-message           | description                       | additional
-------------------|-----------------------------------|---------------------------
-no config         | Can't load config for `getConfig` | `err.details`, `err.error`
-invalid data      | Can't read stats for `getStats`   | `err.details`
-invalid interface | `iface` is invalid or not set up  |
-
-
-
-getStats ( [iface], callback )
+getStats ({ [iface] })
 --------
 
 Get statistics for one, multiple or all interfaces.
 
-* One: `vnstat.getStats ('eth0', callback)`
-* All: `vnstat.getStats (false, callback)`
+* One: `vnstat.getStats ({ iface: 'eth0' })`
+* All: `vnstat.getStats ()`
 
 
 ```js
 // Get traffic for interface en1
-vnstat.getStats ('en1', console.log);
+const data = await vnstat.getStats ({ iface: 'en1' });
 
 // Output
 { id: 'en1',
@@ -151,20 +111,15 @@ vnstat.getStats ('en1', console.log);
 ```
 
 
-getConfig ( callback )
+getConfig ()
 ---------
 
 Get vnStat configuration.
 
 ```js
-vnstat.getConfig (function (err, config) {
-  if (err) {
-    console.log (err);
-    return;
-  }
+const config = await vnstat.getConfig();
 
-  console.log ('Interfaces updating every ' + config.UpdateInterval + ' seconds');
-});
+console.log (`Interfaces updating every ${config.UpdateInterval} seconds`);
 ```
 
 
@@ -194,12 +149,12 @@ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
-For more information, please refer to <http://unlicense.org>
+For more information, please refer to <https://unlicense.org>
 
 
 Author
 ------
 
-[Franklin van de Meent](https://frankl.in)
+[Franklin](https://fvdm.com)
 
-[![Buy me a coffee](https://frankl.in/u/kofi/kofi-readme.png)](https://ko-fi.com/franklin)
+[![Buy me a coffee](https://fvdm.com/u/kofi/kofi-readme.png)](https://fvdm.com/donating)

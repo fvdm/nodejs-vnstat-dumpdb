@@ -7,137 +7,94 @@ Feedback:       https://github.com/fvdm/nodejs-vnstat-dumpdb/issues
 License:        Unlicense (see LICENSE file)
 */
 
-var exec = require ('child_process') .exec;
+const { exec } = require ('child_process');
 
-var set = {
-  bin: 'vnstat',
-  iface: null,
-  config: {}
-};
+module.exports = class vnStat {
 
+  /**
+   * @param   {string}  [bin]    Path to vnstat binary
+   * @param   {string}  [iface]  Limit to interface
+   */
 
-/**
- * Make and callback an error
- *
- * @callback callback
- * @param message {string} - Error.message
- * @param err {Error, null} - Error.error
- * @param details {mixed} - Error.details
- * @param callback {function} - `function (err) {}`
- * @returns {void}
- */
-
-function doError (message, err, details, callback) {
-  var error = new Error (message);
-
-  error.error = err;
-  error.details = details;
-  callback (error);
-}
+  constructor ({
+    bin = 'vnstat',
+    iface = null,
+  } = {}) {
+    this._config = {
+      bin,
+      iface,
+    };
+  }
 
 
-/**
- * Get vnStat config
- *
- * @callback callback
- * @param callback {function} - `function (err, data) {}`
- * @returns {void}
- */
+  /**
+   * Run CLI command async
+   * correctly mapping stdErr to Promise reject
+   *
+   * @param   {string}  command  CLI command to execute
+   *
+   * @return  {Promise<string>}
+   */
 
-function getConfig (callback) {
-  exec (set.bin + ' --showconfig', function (err, text) {
-    var config = {};
-    var line;
-    var i;
+  function _cmd (command) {
+    return new Promise ((resolve, reject) => {
+      exec (command, (err, stdout, stderr) => {
+        if (err) return reject (err);
+        if (stderr) return reject (new Error (stderr));
 
-    if (err) {
-      doError ('no config', err, text, callback);
-      return;
-    }
+        resolve (stdout);
+      });
+    });
+  }
+
+
+  /**
+   * Get vnStat config
+   *
+   * @return  {Promise<object>}
+   */
+
+  async function getConfig () {
+    const text = await this._cmd (`${set.bin} --showconfig`);
+    const config = {};
+
+    let line;
+    let i;
 
     text = text.split ('\n');
+    text = text.forEach (line => {
+      line = line.trim();
 
-    for (i = 0; i < text.length; i++) {
-      line = text [i] .trim ();
+      line.replace (/^([^#]\w+)\s+(")?(.+)\2/, (s, key, q, val) => {
+        config[key] = val;
+      });
+    });
 
-      if (line.substr (0, 1) !== '#') {
-        line.replace (/(\w+)\s+(.+)/, function (s, key, val) {
-          config [key] = val.slice (0, 1) === '"' ? val.slice (1, -1) : val;
-        });
-      }
-    }
-
-    callback (null, config);
-  });
-}
-
-
-/**
- * Get stats database
- *
- * @callback callback
- * @param [iface] {string} - Limit data to one interface
- * @param callback {function} - `function (err, data) {}`
- * @returns {void}
- */
-
-function getStats (iface, callback) {
-  var i;
-
-  if (typeof iface === 'function') {
-    callback = iface;
-    iface = set.iface;
+    return config;
   }
 
-  exec (set.bin + ' --json', function (err, json, stderr) {
-    if (err) {
-      err.stderr = stderr;
-      doError ('command failed', err, json, callback);
-      return;
-    }
 
-    try {
-      json = JSON.parse (json);
-    } catch (e) {
-      doError ('invalid data', e, json, callback);
-      return;
-    }
+  /**
+   * Get stats database
+   *
+   * @param   {string}  [iface]  Limit data to one interface
+   *
+   * @return  {Promise<array>}
+   */
+
+  async function getStats ({
+    iface = this._config.iface,
+  } = {}) {
+    let data;
+    let i;
+
+    data = await exec (`${set.bin} --json`);
+    data = JSON.parse (dat);
+    data = data.interfaces;
 
     if (iface) {
-      for (i = 0; i < json.interfaces.length; i++) {
-        if (json.interfaces [i] .id === iface) {
-          callback (null, json.interfaces [i]);
-          return;
-        }
-      }
-
-      doError ('invalid interface', { iface }, json, callback);
-      return;
-    }
-
-    callback (null, json.interfaces);
-  });
-}
-
-
-/**
- * Configuration
- *
- * @param [setup] {object}
- * @param [setup.bin] {string=vnstat} - Command of or path to vnstat binary
- * @param [setup.iface] {string} - Select interface, defaults to all (null)
- * @returns {object} - Module interface methods
- */
-
-module.exports = function (setup) {
-  if (setup instanceof Object) {
-    set.bin = setup.bin || set.bin;
-    set.iface = setup.iface || set.iface;
+      data = data.filter (ifc => ifc.id === iface);
+    });
   }
 
-  return {
-    getStats: getStats,
-    getConfig: getConfig,
-    set: set
-  };
 };

@@ -73,7 +73,7 @@ dotest.add ('Method .getStats - all', async test => {
   }
   catch (err) {
     test (err).done();
-  });
+  }
 });
 
 
@@ -94,7 +94,7 @@ dotest.add ('Error: invalid interface', async test => {
       .isExactly ('fail', 'err.message', err && err.message, 'invalid interface')
       .done()
     ;
-  });
+  }
 });
 
 
@@ -116,6 +116,7 @@ dotest.add ('Error: no config', async test => {
       .isExactly ('fail', 'err.message', err && err.message, 'no config')
       .done()
     ;
+  }
 });
 
 

@@ -36,7 +36,7 @@ module.exports = class vnStat {
    * @return  {Promise<string>}
    */
 
-  function _cmd (command) {
+  _cmd (command) {
     return new Promise ((resolve, reject) => {
       exec (command, (err, stdout, stderr) => {
         if (err) return reject (err);
@@ -54,7 +54,7 @@ module.exports = class vnStat {
    * @return  {Promise<object>}
    */
 
-  async function getConfig () {
+  async getConfig () {
     const text = await this._cmd (`${set.bin} --showconfig`);
     const config = {};
 
@@ -82,7 +82,7 @@ module.exports = class vnStat {
    * @return  {Promise<array>}
    */
 
-  async function getStats ({
+  async getStats ({
     iface = this._config.iface,
   } = {}) {
     let data;

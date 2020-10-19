@@ -55,7 +55,7 @@ module.exports = class vnStat {
    */
 
   async getConfig () {
-    const text = await this._cmd (`${set.bin} --showconfig`);
+    const text = await this._cmd (`${this._config.bin} --showconfig`);
     const config = {};
 
     let line;
@@ -88,8 +88,8 @@ module.exports = class vnStat {
     let data;
     let i;
 
-    data = await exec (`${set.bin} --json`);
-    data = JSON.parse (dat);
+    data = await exec (`${this._config.bin} --json`);
+    data = JSON.parse (data);
     data = data.interfaces;
 
     if (iface) {

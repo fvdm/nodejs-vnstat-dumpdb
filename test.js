@@ -103,7 +103,7 @@ dotest.add ('Error: no config', async test => {
   vnstat = new app (config);
 
   try {
-    const data = async vnstat.getConfig();
+    const data = await vnstat.getConfig();
 
     test()
       .isUndefined ('fail', 'data', data)

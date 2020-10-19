@@ -10,7 +10,6 @@ License:        Unlicense (see LICENSE file)
 const { exec } = require ('child_process');
 
 module.exports = class vnStat {
-
   /**
    * @param   {string}  [bin]    Path to vnstat binary
    * @param   {string}  [iface]  Limit to interface
@@ -39,8 +38,15 @@ module.exports = class vnStat {
   _cmd (command) {
     return new Promise ((resolve, reject) => {
       exec (command, (err, stdout, stderr) => {
-        if (err) return reject (err);
-        if (stderr) return reject (new Error (stderr));
+        if (err) {
+          reject (err);
+          return;
+        }
+
+        if (stderr) {
+          reject (new Error (stderr));
+          return;
+        }
 
         resolve (stdout);
       });
@@ -58,11 +64,9 @@ module.exports = class vnStat {
     const text = await this._cmd (`${this._config.bin} --showconfig`);
     const config = {};
 
-    let line;
-    let i;
-
     text = text.split ('\n');
-    text = text.forEach (line => {
+
+    text.forEach (line => {
       line = line.trim();
 
       line.replace (/^([^#]\w+)\s+(")?(.+)\2/, (s, key, q, val) => {
@@ -86,7 +90,6 @@ module.exports = class vnStat {
     iface = this._config.iface,
   } = {}) {
     let data;
-    let i;
 
     data = await exec (`${this._config.bin} --json`);
     data = JSON.parse (data);
@@ -96,5 +99,4 @@ module.exports = class vnStat {
       data = data.filter (ifc => ifc.id === iface);
     }
   }
-
 };

@@ -2,6 +2,12 @@ os: "linux"
 dist: "bionic"
 language: "node_js"
 node_js:
- - "14"
- - "12"
- - "10"
+  - "14"
+  - "12"
+  - "10"
+env:
+  - NODE_APP_BIN="./vnstat"
+before_install:
+  - sudo apt-get -y install vnstat
+  - sudo vnstatd -d
+  - sudo vnstat -u -i $NODE_APP_IFACE

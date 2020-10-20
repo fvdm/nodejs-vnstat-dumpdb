@@ -35,12 +35,19 @@ module.exports = class vnStat {
    * Run CLI command async
    * correctly mapping stdErr to Promise reject
    *
-   * @param   {string}  command  CLI command to execute
+   * @param   {string}  args          Arguments for vnStat command
    *
    * @return  {Promise<string>}
    */
 
-  _cmd (command) {
+  _cmd ({
+
+    args,
+
+  }) {
+
+    let command = `${this._config.binPath} ${args}`;
+
     return new Promise ((resolve, reject) => {
       exec (command, (err, stdout, stderr) => {
         if (err) {
@@ -56,6 +63,7 @@ module.exports = class vnStat {
         resolve (stdout);
       });
     });
+
   }
 
 
@@ -66,8 +74,8 @@ module.exports = class vnStat {
    */
 
   async getConfig () {
-    const text = await this._cmd (`${this._config.bin} --showconfig`);
-    const config = {};
+    let config = {};
+    let text = await this._cmd ({ args: '--showconfig' });
 
     text = text.split ('\n');
 

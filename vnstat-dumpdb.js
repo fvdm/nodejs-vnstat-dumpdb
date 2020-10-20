@@ -12,19 +12,19 @@ const { exec } = require ('child_process');
 module.exports = class vnStat {
 
   /**
-   * @param   {string}  [bin]    Path to vnstat binary
+   * @param   {string}  [binPath]       Path to vnstat binary
    * @param   {string}  [iface]         Limit to interface
    */
 
   constructor ({
-    bin = 'vnstat',
 
+    binPath = 'vnstat',
     iface = null,
 
   } = {}) {
 
     this._config = {
-      bin,
+      binPath,
       iface,
     };
 

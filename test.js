@@ -4,7 +4,7 @@ const app = require ('./');
 // Setup
 // $ NODE_APP_IFACE=eth0 npm test
 let config = {
-  bin: process.env.NODE_APP_BIN || null,
+  binPath: process.env.NODE_APP_BIN || null,
 };
 
 let iface = process.env.NODE_APP_IFACE || 'eth0';

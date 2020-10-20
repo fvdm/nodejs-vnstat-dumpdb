@@ -90,13 +90,33 @@ module.exports = class vnStat {
     iface = this._config.iface,
   } = {}) {
     let data;
+    let ifaces;
+
 
     data = await this._cmd ({ args: `${iface} --json` });
     data = JSON.parse (data);
-    data = data.interfaces;
+    ifaces = data.interfaces;
+
+    // Convert interfaces to jsonversion 2
+    if (data.jsonversion === '1') {
+      ifaces.forEach ((itm, key) => {
+        ifaces[key].name = itm.id;
+        ifaces[key].traffic.hour = itm.traffic.hours;
+        ifaces[key].traffic.day = itm.traffic.days;
+        ifaces[key].traffic.month = itm.traffic.months;
+        ifaces[key].traffic.top = itm.traffic.tops;
+
+        delete ifaces[key].traffic.hours;
+        delete ifaces[key].traffic.days;
+        delete ifaces[key].traffic.months;
+        delete ifaces[key].traffic.tops;
+      });
+    }
 
     if (iface) {
       data = data.filter (ifc => ifc.id === iface);
     }
+
+    return ifaces;
   }
 };

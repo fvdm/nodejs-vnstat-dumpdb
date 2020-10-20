@@ -63,14 +63,26 @@ module.exports = class vnStat {
     }
 
     return new Promise ((resolve, reject) => {
-        if (err) {
       exec (command, options, (err, stdout, stderr) => {
+        let cmdError = stdout && stdout.match (/^Error: (.+)/);
+        let error;
+
+        if (cmdError) {
+          error = new Error (cmdError[1]);
+        }
+
+        if (stderr) {
+          error = new Error (stderr);
+        }
+
+        if (err && error) {
+          err.message = error.message;
           reject (err);
           return;
         }
 
-        if (stderr) {
-          reject (new Error (stderr));
+        if (err) {
+          reject (err);
           return;
         }
 

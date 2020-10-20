@@ -14,18 +14,24 @@ module.exports = class vnStat {
   /**
    * @param   {string}  [binPath]       Path to vnstat binary
    * @param   {string}  [iface]         Limit to interface
+   * @param   {string}  [configFile]    Override default config file path
+   * @param   {number}  [timeout=2000]  Wait time in ms for vnstat response
    */
 
   constructor ({
 
     binPath = 'vnstat',
     iface = null,
+    configFile = null,
+    timeout = 2000,
 
   } = {}) {
 
     this._config = {
       binPath,
       iface,
+      configFile,
+      timeout,
     };
 
   }
@@ -46,11 +52,19 @@ module.exports = class vnStat {
 
   }) {
 
+    const options = {
+      timeout: this._config.timeout,
+    };
+
     let command = `${this._config.binPath} ${args}`;
 
+    if (this._config.configFile) {
+      command += ` --config ${this._config.configFile}`;
+    }
+
     return new Promise ((resolve, reject) => {
-      exec (command, (err, stdout, stderr) => {
         if (err) {
+      exec (command, options, (err, stdout, stderr) => {
           reject (err);
           return;
         }

@@ -27,109 +27,154 @@ dotest.add ('Module', test => {
 
 
 dotest.add ('Method .getConfig', async test => {
-  try {
-    const data = await vnstat.getConfig();
+  let error;
+  let data;
 
-    test (err)
-      .isObject ('fail', 'data', data)
-      .isNotEmpty ('fail', 'data.DatabaseDir', data && data.DatabaseDir)
-      .isNotEmpty ('fail', 'data.Interface', data && data.Interface)
-      .done()
-    ;
+  try {
+    data = await vnstat.getConfig();
   }
+
   catch (err) {
-    test (err).done();
+    error = err;
   }
+
+  test (error)
+    .isObject ('fail', 'data', data)
+    .isNotEmpty ('fail', 'data.DatabaseDir', data && data.DatabaseDir)
+    .isNotEmpty ('fail', 'data.Interface', data && data.Interface)
+    .done()
+  ;
 });
 
 
 dotest.add ('Method .getStats - iface', async test => {
-  try {
-    const data = await vnstat.getStats ({ iface });
-    const days = data && data.traffic && data.traffic.days;
-    const rx = days && days[0] && days[0].rx;
+  let error;
+  let data;
+  let day;
+  let rx;
 
-    test()
-      .isObject ('fail', 'data', data)
-      .isString ('fail', 'data.id', data && data.id)
-      .isObject ('fail', 'data.traffic', data && data.traffic)
-      .isArray ('fail', 'data.traffic.days', days)
-      .isObject ('fail', 'data.traffic.days[0]', days && days[0])
-      .isNumber ('fail', 'data.traffic.days[0].rx', rx)
-      .done()
-    ;
+  try {
+    data = await vnstat.getStats ({ iface });
+    day = data && data.traffic && data.traffic.day;
+    rx = day && day[0] && day[0].rx;
   }
+
   catch (err) {
-    test (err);
+    error = err;
   }
+
+  test (error)
+    .isObject ('fail', 'data', data)
+    .isString ('fail', 'data.name', data && data.name)
+    .isObject ('fail', 'data.traffic', data && data.traffic)
+    .isArray ('fail', 'data.traffic.hour', data && data.traffic.hour)
+    .isArray ('fail', 'data.traffic.day', data && data.traffic.day)
+    .isArray ('fail', 'data.traffic.month', data && data.traffic.month)
+    .isArray ('fail', 'data.traffic.top', data && data.traffic.top)
+    .isObject ('fail', 'data.traffic.day[0]', day && day[0])
+    .isNumber ('fail', 'data.traffic.day[0].rx', rx)
+    .done()
+  ;
 });
 
 
 dotest.add ('Method .getStats - all', async test => {
-  try {
-    const data = await vnstat.getStats();
+  let error;
+  let data;
+  let itm;
 
-    test()
-      .isArray ('fail', 'data', data)
-      .done()
-    ;
+  try {
+    data = await vnstat.getStats();
+    itm = Array.isArray (data) && data[0];
   }
+
   catch (err) {
-    test (err).done();
+    error = err;
   }
+
+  test (error)
+    .isArray ('fail', 'data', data)
+    .isObject ('fail', 'data[0]', itm)
+    .isString ('fail', 'data[0].name', itm && itm.name)
+    .isObject ('fail', 'data[0].traffic', itm && itm.traffic)
+    .isArray ('fail', 'data[0].traffic.hour', itm && itm.traffic.hour)
+    .isArray ('fail', 'data[0].traffic.day', itm && itm.traffic.day)
+    .isArray ('fail', 'data[0].traffic.month', itm && itm.traffic.month)
+    .isArray ('fail', 'data[0].traffic.top', itm && itm.traffic.top)
+    .done()
+  ;
 });
 
 
 dotest.add ('Error: invalid interface', async test => {
+  let error;
+  let data;
+
   try {
-    const data = await vnstat.getStats ({
+    data = await vnstat.getStats ({
       iface: 'unreal-iface',
     });
+  }
 
-    test()
-      .isUndefined ('fail', 'data', data)
-      .done()
-    ;
-  }
   catch (err) {
-    test()
-      .isError ('fail', 'err', err)
-      .isExactly ('fail', 'err.message', err && err.message, 'invalid interface')
-      .done()
-    ;
+    error = err;
   }
+
+  test()
+    .isError ('fail', 'err', error)
+    .isRegexpMatch ('fail', 'err.message', error && error.message, /(Interface .+ not found in database|Unable to read database)/)
+    .isUndefined ('fail', 'data', data)
+    .done()
+  ;
 });
 
 
 dotest.add ('Error: no config', async test => {
-  config.bin = '-';
-  vnstat = new app (config);
+  let error;
+  let data;
+  let conf = { ...config, configFile: 'not-vnstat' };
+  let vn = new app (conf);
 
   try {
-    const data = await vnstat.getConfig();
+    data = await vn.getConfig();
+  }
 
-    test()
-      .isUndefined ('fail', 'data', data)
-      .done()
-    ;
-  }
   catch (err) {
-    test()
-      .isError ('fail', 'err', err)
-      .isExactly ('fail', 'err.message', err && err.message, 'no config')
-      .done()
-    ;
+    error = err;
   }
+
+  test()
+    .isError ('fail', 'err', error)
+    .isRegexpMatch ('fail', 'err.message', error && error.message, /Unable to open given config file/)
+    .isUndefined ('fail', 'data', data)
+    .done()
+  ;
 });
 
 
 dotest.add ('Error: command failed', async test => {
-  config.bin = '-';
-  vnstat = new app (config);
+  let error;
+  let data;
+  let conf = { ...config, binPath: 'not-vnstat' };
+  let vn = new app (conf);
 
   try {
-    const data = await vnstat.getStats();
+    data = await vn.getStats();
+  }
 
+  catch (err) {
+    error = err;
+  }
+
+  test()
+    .isError ('fail', 'err', error)
+    .isExactly ('fail', 'err.killed', error && error.killed, false)
+    .isNumber ('fail', 'err.code', error && error.code)
+    .isNotEmpty ('fail', 'err.cmd', error && error.cmd)
+    .isUndefined ('fail', 'data', data)
+    .done()
+  ;
+});
     test()
       .isUndefined ('fail', 'data', data)
       .done()

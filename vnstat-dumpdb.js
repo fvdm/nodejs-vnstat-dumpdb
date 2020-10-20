@@ -91,7 +91,7 @@ module.exports = class vnStat {
   } = {}) {
     let data;
 
-    data = await exec (`${this._config.bin} --json`);
+    data = await this._cmd ({ args: `${iface} --json` });
     data = JSON.parse (data);
     data = data.interfaces;
 

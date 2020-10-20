@@ -157,7 +157,7 @@ module.exports = class vnStat {
     }
 
     if (iface) {
-      data = data.filter (ifc => ifc.id === iface);
+      ifaces = ifaces[0];
     }
 
     return ifaces;

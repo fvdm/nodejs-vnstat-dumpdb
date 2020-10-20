@@ -7,6 +7,7 @@ let config = {
   binPath: process.env.NODE_APP_BIN || null,
 };
 
+let testOld = process.env.NODE_APP_TESTOLD || null;
 let iface = process.env.NODE_APP_IFACE || 'eth0';
 
 let vnstat = new app (config);
@@ -175,18 +176,76 @@ dotest.add ('Error: command failed', async test => {
     .done()
   ;
 });
+
+
+dotest.add ('Old vnstat v1 - .getVersion', async test => {
+  if (!testOld) {
     test()
-      .isUndefined ('fail', 'data', data)
+      .warn ('Not testing old vnstat version')
       .done()
     ;
+    return;
   }
+
+  let error;
+  let data;
+  let conf = { ...config, binPath: './vnstat' };
+  let vn = new app (conf);
+
+  try {
+    data = await vn.getVersion();
+  }
+
   catch (err) {
+    error = err;
+  }
+
+  test (error)
+    .isObject ('warn', 'data', data)
+    .isNumber ('warn', 'data.version', data && data.version)
+    .isNumber ('warn', 'data.major', data && data.major)
+    .isNumber ('warn', 'data.minor', data && data.minor)
+    .done()
+  ;
+});
+
+
+dotest.add ('Old vnstat v1 - .getStats - all', async test => {
+  if (!testOld) {
     test()
-      .isError ('fail', 'err', err)
-      .isExactly ('fail', 'err.message', err && err.message, 'command failed')
+      .warn ('Not testing old vnstat version')
       .done()
     ;
+    return;
   }
+
+  let error;
+  let data;
+  let itm;
+  let conf = { ...config, binPath: './vnstat' };
+  let vn = new app (conf);
+
+  try {
+    data = await vn.getStats();
+    itm = Array.isArray (data) && data[0];
+  }
+
+  catch (err) {
+    error = err;
+  }
+
+  test (error)
+    .isArray ('warn', 'data', data)
+    .isObject ('warn', 'data[0]', itm)
+    .isString ('warn', 'data[0].name', itm && itm.name)
+    .isObject ('warn', 'data[0].traffic', itm && itm.traffic)
+    .isArray ('warn', 'data[0].traffic.hour', itm && itm.traffic.hour)
+    .isArray ('warn', 'data[0].traffic.day', itm && itm.traffic.day)
+    .isArray ('warn', 'data[0].traffic.month', itm && itm.traffic.month)
+    .isArray ('warn', 'data[0].traffic.top', itm && itm.traffic.top)
+    .done()
+  ;
+});
 });
 
 

@@ -92,6 +92,7 @@ module.exports = class vnStat {
     let data;
     let ifaces;
 
+    iface = iface ? `-i ${iface}` : '';
 
     data = await this._cmd ({ args: `${iface} --json` });
     data = JSON.parse (data);

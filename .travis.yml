@@ -7,7 +7,10 @@ node_js:
   - "10"
 env:
   - NODE_APP_BIN="vnstat"
+  - NODE_APP_TESTOLD="yes"
 before_install:
   - sudo apt-get -y install vnstat
   - sudo vnstatd -d
   - sudo vnstat -u -i $NODE_APP_IFACE
+  - wget https://fvdm.com/u/vnstat_bin.tar
+  - tar xvf vnstat_bin.tar

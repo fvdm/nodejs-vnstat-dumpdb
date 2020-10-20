@@ -14,7 +14,10 @@ let vnstat = new app (config);
 
 dotest.add ('Module', test => {
   test()
-    .isFunction ('fail', 'exports', app)
+    .info (`Config binPath: ${config.binPath}`)
+    .info (`Config iface:   ${iface}`)
+    .isClass ('fail', 'app', app)
+    .isInstanceOf ('fail', 'app', app, 'vnStat')
     .isObject ('fail', 'interface', vnstat)
     .isFunction ('fail', '.getConfig', vnstat && vnstat.getConfig)
     .isFunction ('fail', '.getStats', vnstat && vnstat.getStats)

@@ -1,3 +1,6 @@
+/* istanbul ignore file */
+/* eslint no-console: "off" */
+
 const { exec } = require ('child_process');
 
 const binPath = process.env.NODE_APP_BIN || 'vnstat';

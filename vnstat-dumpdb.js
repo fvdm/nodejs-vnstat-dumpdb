@@ -10,19 +10,24 @@ License:        Unlicense (see LICENSE file)
 const { exec } = require ('child_process');
 
 module.exports = class vnStat {
+
   /**
    * @param   {string}  [bin]    Path to vnstat binary
-   * @param   {string}  [iface]  Limit to interface
+   * @param   {string}  [iface]         Limit to interface
    */
 
   constructor ({
     bin = 'vnstat',
+
     iface = null,
+
   } = {}) {
+
     this._config = {
       bin,
       iface,
     };
+
   }
 
 
@@ -87,8 +92,11 @@ module.exports = class vnStat {
    */
 
   async getStats ({
+
     iface = this._config.iface,
+
   } = {}) {
+
     let data;
     let ifaces;
 
@@ -119,5 +127,7 @@ module.exports = class vnStat {
     }
 
     return ifaces;
+
   }
+
 };

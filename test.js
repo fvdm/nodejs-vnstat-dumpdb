@@ -20,6 +20,7 @@ dotest.add ('Module', test => {
     .isClass ('fail', 'app', app)
     .isInstanceOf ('fail', 'app', app, 'vnStat')
     .isObject ('fail', 'interface', vnstat)
+    .isFunction ('fail', '.getVersion', vnstat && vnstat.getVersion)
     .isFunction ('fail', '.getConfig', vnstat && vnstat.getConfig)
     .isFunction ('fail', '.getStats', vnstat && vnstat.getStats)
     .done()
@@ -246,6 +247,27 @@ dotest.add ('Old vnstat v1 - .getStats - all', async test => {
     .done()
   ;
 });
+
+
+dotest.add ('Method .getVersion', async test => {
+  let error;
+  let data;
+
+  try {
+    data = await vnstat.getVersion();
+  }
+
+  catch (err) {
+    error = err;
+  }
+
+  test (error)
+    .isObject ('fail', 'data', data)
+    .isNumber ('fail', 'data.version', data && data.version)
+    .isNumber ('fail', 'data.major', data && data.major)
+    .isNumber ('fail', 'data.minor', data && data.minor)
+    .done()
+  ;
 });
 
 

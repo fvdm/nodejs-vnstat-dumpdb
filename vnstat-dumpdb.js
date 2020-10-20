@@ -113,7 +113,7 @@ module.exports = class vnStat {
     let cmd = await this._cmd ({ args: '--version' });
     let data = {};
 
-    cmd.replace (/^vnStat ((\d)\.(\d))/, (str, version, major, minor) => {
+    cmd.replace (/^vnStat ((\d+)\.(\d+))/, (str, version, major, minor) => {
       data.version = parseFloat (version, 10);
       data.major = parseInt (major, 10);
       data.minor = parseInt (minor, 10);

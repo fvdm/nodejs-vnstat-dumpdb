@@ -75,12 +75,18 @@ module.exports = class vnStat {
           error = new Error (stderr);
         }
 
-        if (err && error) {
-          err.message = error.message;
-          reject (err);
+        // Error without return code
+        if (!err && error) {
+          reject (error);
           return;
         }
 
+        // Error with return code
+        if (err && error) {
+          err.message = error.message;
+        }
+
+        // Process failed
         if (err) {
           reject (err);
           return;

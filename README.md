@@ -67,6 +67,9 @@ getStats ({ [iface] })
 
 Get statistics for one, multiple or all interfaces.
 
+When using an old vnStat v1 the data is converted
+to match the v2 structure for consistency.
+
 * One: `vnstat.getStats ({ iface: 'eth0' })`
 * All: `vnstat.getStats ()`
 

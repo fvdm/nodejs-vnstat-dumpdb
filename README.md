@@ -40,12 +40,26 @@ Make sure you have **vnStat v1.13** or later.
 Configuration
 -------------
 
-The module loads as a function to override the defaults:
+The module loads as a function, where you can override
+the defaults:
 
-setting | type   | default  | description
-:-------|:-------|:---------|:-----------
-[bin]   | string | 'vnstat' | Path to vnstat binary
-[iface] | string | null     | Limit to interface: `eth0`
+setting      | type   | default  | description
+:------------|:-------|:---------|:-----------
+[binPath]    | string | 'vnstat' | Path to vnstat binary
+[iface]      | string | null     | Limit to interface: `eth0`
+[configFile] | string |          | vnStat config file path
+[timeout]    | number | 2000     | Wait ms for command result
+
+The setting `binPath` can be anything you run on a shell.
+For example, you can access vnstat on a remote server using a SSH tunnel:
+
+```js
+const vnStatDumpDB = require ('vnstat-dumpdb')(
+const vnstat = new vnStatDumpDB ({
+  binPath: 'ssh user@server vnstat',
+  timeout: 4000,
+});
+```
 
 
 getStats ({ [iface] })

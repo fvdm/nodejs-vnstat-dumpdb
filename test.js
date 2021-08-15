@@ -190,11 +190,9 @@ dotest.add ('Old vnstat v1 - .getVersion', async test => {
 
   let error;
   let data;
-  let conf = { ...config, binPath: './vnstat' };
-  let vn = new app (conf);
 
   try {
-    data = await vn.getVersion();
+    data = await vnstat.getVersion();
   }
 
   catch (err) {
@@ -223,11 +221,9 @@ dotest.add ('Old vnstat v1 - .getStats - all', async test => {
   let error;
   let data;
   let itm;
-  let conf = { ...config, binPath: './vnstat' };
-  let vn = new app (conf);
 
   try {
-    data = await vn.getStats();
+    data = await vnstat.getStats();
     itm = Array.isArray (data) && data[0];
   }
 

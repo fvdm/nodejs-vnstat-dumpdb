@@ -23,7 +23,7 @@
     "dotest": "^2.3.0"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
     "test": "dotest",

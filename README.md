@@ -4,7 +4,7 @@ vnstat-dumpdb
 Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat). All methods return promises.
 
 [![npm](https://img.shields.io/npm/v/vnstat-dumpdb.svg?maxAge=3600)](https://github.com/fvdm/nodejs-vnstat-dumpdb/blob/master/CHANGELOG.md)
-[![Build Status](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb)
+[![Build Status](https://github.com/fvdm/nodejs-vnstat-dumpdb/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/fvdm/nodejs-vnstat-dumpdb/actions/workflows/node.js.yml)
 [![Coverage Status](https://coveralls.io/repos/github/fvdm/nodejs-vnstat-dumpdb/badge.svg?branch=master)](https://coveralls.io/github/fvdm/nodejs-vnstat-dumpdb?branch=master)
 
 

@@ -20,7 +20,7 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "dotest": "^2.3.0"
+    "dotest": "^2.9.0"
   },
   "engines": {
     "node": ">=12"

@@ -106,15 +106,15 @@ module.exports = class vnStat {
    */
 
   async getVersion () {
-    let data = await this._cmd ({ args: '--version' });
-    let version = /^(?<version>(?<major>\d+)\.(?<minor>\d+))(-(?<build>\d+))?/.exec (data);
+    let cmd = await this._cmd ({ args: '--version' });
+    let data = /^(?<version>(?<major>\d+)\.(?<minor>\d+))(-(?<build>\d+))?/.exec (cmd);
 
     return {
       version,
       major,
       minor,
       build,
-    } = version.groups;
+    } = data.groups;
   }
 
 

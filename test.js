@@ -8,7 +8,6 @@ let config = {
   iface: process.env.NODE_APP_IFACE || 'eth0',
 };
 
-let testOld = process.env.NODE_APP_TESTOLD || null;
 let vnstat = new app (config);
 
 

@@ -102,24 +102,19 @@ module.exports = class vnStat {
   /**
    * Get vnStat version
    *
-   * @return   {Promise<object>}
-   *
-   * @promise  {number}  version
-   * @promise  (number}  major
-   * @promise  {number}  minor
+   * @return  {Promise<object>}
    */
 
   async getVersion () {
-    let cmd = await this._cmd ({ args: '--version' });
-    let data = {};
+    let data = await this._cmd ({ args: '--version' });
+    let version = /^(?<version>(?<major>\d+)\.(?<minor>\d+))(-(?<build>\d+))?/.exec (data);
 
-    cmd.replace (/^vnStat ((\d+)\.(\d+))/, (str, version, major, minor) => {
-      data.version = parseFloat (version, 10);
-      data.major = parseInt (major, 10);
-      data.minor = parseInt (minor, 10);
-    });
-
-    return data;
+    return {
+      version,
+      major,
+      minor,
+      build,
+    } = version.groups;
   }
 
 

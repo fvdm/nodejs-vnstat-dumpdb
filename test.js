@@ -5,18 +5,17 @@ const app = require ('./');
 // $ NODE_APP_IFACE=eth0 npm test
 let config = {
   binPath: process.env.NODE_APP_BINPATH || null,
+  iface: process.env.NODE_APP_IFACE || 'eth0',
 };
 
 let testOld = process.env.NODE_APP_TESTOLD || null;
-let iface = process.env.NODE_APP_IFACE || 'eth0';
-
 let vnstat = new app (config);
 
 
 dotest.add ('Module', test => {
   test()
     .info (`Config binPath: ${config.binPath}`)
-    .info (`Config iface:   ${iface}`)
+    .info (`Config iface:   ${config.iface}`)
     .isClass ('fail', 'app', app)
     .isInstanceOf ('fail', 'app', app, 'vnStat')
     .isObject ('fail', 'interface', vnstat)
@@ -56,7 +55,7 @@ dotest.add ('Method .getStats - iface', async test => {
   let rx;
 
   try {
-    data = await vnstat.getStats ({ iface });
+    data = await vnstat.getStats ({ iface: config.iface });
     day = data && data.traffic && data.traffic.day;
     rx = day && day[0] && day[0].rx;
   }

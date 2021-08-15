@@ -69,7 +69,6 @@ Get statistics for one, multiple or all interfaces.
 
 When using an old vnStat v1 the data is converted
 to match the v2 structure for consistency.
-
 * One: `vnstat.getStats ({ iface: 'eth0' })`
 * All: `vnstat.getStats ()`
 
@@ -173,5 +172,4 @@ Author
 ------
 
 [Franklin](https://fvdm.com)
-
-[![Buy me a coffee](https://fvdm.com/u/kofi/kofi-readme.png)](https://fvdm.com/donating)
+| [Buy me a coffee](https://fvdm.com/donating)

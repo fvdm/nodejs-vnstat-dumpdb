@@ -26,7 +26,6 @@ jobs:
         node-version: ${{ fromJson(needs.lts_versions.outputs.matrix) }}
     steps:
       - run: sudo apt-get -y install vnstat
-      - run: sudo vnstat -i eth0 --add
       - run: sudo vnstat -i eth0 -u
       - uses: actions/checkout@v2
       - name: Test on Node.js ${{ matrix.node-version }}

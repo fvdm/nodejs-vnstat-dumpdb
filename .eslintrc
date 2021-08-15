@@ -1,4 +1,5 @@
 {
+  "root": true,
   "parserOptions": {
     "ecmaVersion": 2018,
     "ecmaFeatures": {
@@ -63,7 +64,6 @@
     "no-alert": "error",
     "no-caller": "error",
     "no-catch-shadow": "error",
-    "no-console": "error",
     "no-delete-var": "error",
     "no-div-regex": "error",
     "no-duplicate-case": "error",

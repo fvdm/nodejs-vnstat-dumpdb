@@ -21,9 +21,7 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "@eslint/js": "^9",
-    "dotest": "^2",
-    "globals": "^15"
+    "dotest": "^2"
   },
   "engines": {
     "node": ">=18"

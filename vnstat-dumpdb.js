@@ -7,7 +7,7 @@ Feedback:       https://github.com/fvdm/nodejs-vnstat-dumpdb/issues
 License:        Unlicense (see LICENSE file)
 */
 
-var exec = require( 'child_process' ) .exec;
+var exec = require( 'child_process' ).exec;
 
 var set = {
   bin: 'vnstat',
@@ -45,7 +45,7 @@ function doError ( message, err, details, callback ) {
  */
 
 function getConfig ( callback ) {
-  exec( set.bin + ' --showconfig', function ( err, text ) {
+  exec( `${set.bin} --showconfig`, function ( err, text ) {
     var config = {};
     var line;
     var i;
@@ -58,11 +58,11 @@ function getConfig ( callback ) {
     text = text.split( '\n' );
 
     for ( i = 0; i < text.length; i++ ) {
-      line = text [i] .trim();
+      line = text[i].trim();
 
       if ( line.substr( 0, 1 ) !== '#' ) {
         line.replace( /(\w+)\s+(.+)/, function ( s, key, val ) {
-          config [key] = val.slice( 0, 1 ) === '"' ? val.slice( 1, -1 ) : val;
+          config[key] = val.slice( 0, 1 ) === '"' ? val.slice( 1, -1 ) : val;
         } );
       }
     }
@@ -89,7 +89,7 @@ function getStats ( iface, callback ) {
     iface = set.iface;
   }
 
-  exec( set.bin + ' --json', function ( err, json, stderr ) {
+  exec( `${set.bin} --json`, function ( err, json, stderr ) {
     if ( err ) {
       err.stderr = stderr;
       doError( 'command failed', err, json, callback );
@@ -106,8 +106,8 @@ function getStats ( iface, callback ) {
 
     if ( iface ) {
       for ( i = 0; i < json.interfaces.length; i++ ) {
-        if ( json.interfaces [i] .id === iface ) {
-          callback( null, json.interfaces [i] );
+        if ( json.interfaces[i].id === iface ) {
+          callback( null, json.interfaces[i] );
           return;
         }
       }

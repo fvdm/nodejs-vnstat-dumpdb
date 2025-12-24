@@ -36,14 +36,14 @@ dotest.add( 'Method .getConfig', function ( test ) {
 dotest.add( 'Method .getStats - iface', function ( test ) {
   vnstat.getStats( iface, function ( err, data ) {
     var days = data && data.traffic && data.traffic.days;
-    var rx = days && days [0] && days [0] .rx;
+    var rx = days && days[0] && days[0].rx;
 
     test( err )
       .isObject( 'fail', 'data', data )
       .isString( 'fail', 'data.id', data && data.id )
       .isObject( 'fail', 'data.traffic', data && data.traffic )
       .isArray( 'fail', 'data.traffic.days', days )
-      .isObject( 'fail', 'data.traffic.days[0]', days && days [0] )
+      .isObject( 'fail', 'data.traffic.days[0]', days && days[0] )
       .isNumber( 'fail', 'data.traffic.days[0].rx', rx )
       .done();
   } );

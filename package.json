@@ -16,11 +16,15 @@
   },
   "main": "vnstat-dumpdb.js",
   "files": [
+    "vnstat-dumpdb.js",
     "preinstall.js"
   ],
   "dependencies": {},
   "devDependencies": {
-    "dotest": "^2"
+    "@eslint/js": "^9",
+    "dotest": "^2.14.2",
+    "eslint": "^9",
+    "globals": "^15"
   },
   "engines": {
     "node": ">=18"

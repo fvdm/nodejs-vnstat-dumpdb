@@ -10,7 +10,10 @@ exec( bin + ' --version', function ( err, res ) {
   }
 
   res.replace( /^vnStat (\d+)\.(\d+) /, function ( s, major, minor ) {
-    if ( major >= 1 && minor >= 13 ) {
+    major = parseInt( major, 10 );
+    minor = parseInt( minor, 10 );
+
+    if ( major > 1 || ( major === 1 && minor >= 13 ) ) {
       return;
     }
 

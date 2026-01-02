@@ -14,27 +14,27 @@ Example
 -------
 
 ```js
-var vnstat = require ('vnstat-dumpdb') ();
+const vnstat = require( 'vnstat-dumpdb' )();
 
 // Get traffic per day
-vnstat.getStats ('eth0', function (err, data) {
-  if (err) {
-    console.log (err);
+vnstat.getStats( 'eth0', ( err, data ) => {
+  if ( err ) {
+    console.log( err );
     return;
   }
 
-  console.log (data.traffic.days);
-});
+  console.log( data.traffic.days );
+} );
 
 // Read config setting
-vnstat.getConfig (function (err, config) {
-  if (err) {
-    console.log (err);
+vnstat.getConfig( ( err, config ) => {
+  if ( err ) {
+    console.log( err );
     return;
   }
 
-  console.log ('Interfaces updating every ' + config.UpdateInterval + ' minutes');
-});
+  console.log( `Interfaces updating every ${config.UpdateInterval} minutes` );
+} );
 ```
 
 
@@ -66,15 +66,15 @@ Each method below takes a callback _function_ which gets two arguments:
 * `data` - Result `object` or not set when error
 
 ```js
-function myCallback (err, data) {
-  if (err) {
-    console.log (err);
-    console.log (err.stack);
+const myCallback = ( err, data ) => {
+  if ( err ) {
+    console.log( err );
+    console.log( err.stack );
     return;
   }
 
-  console.log (data);
-}
+  console.log( data );
+};
 ```
 
 
@@ -93,13 +93,13 @@ getStats ( [iface], callback )
 
 Get statistics for one, multiple or all interfaces.
 
-* One: `vnstat.getStats ('eth0', callback)`
-* All: `vnstat.getStats (false, callback)`
+* One: `vnstat.getStats( 'eth0', callback )`
+* All: `vnstat.getStats( false, callback )`
 
 
 ```js
 // Get traffic for interface en1
-vnstat.getStats ('en1', console.log);
+vnstat.getStats( 'en1', console.log );
 
 // Output
 { id: 'en1',
@@ -157,14 +157,14 @@ getConfig ( callback )
 Get vnStat configuration.
 
 ```js
-vnstat.getConfig (function (err, config) {
-  if (err) {
-    console.log (err);
+vnstat.getConfig( ( err, config ) => {
+  if ( err ) {
+    console.log( err );
     return;
   }
 
-  console.log ('Interfaces updating every ' + config.UpdateInterval + ' seconds');
-});
+  console.log( `Interfaces updating every ${config.UpdateInterval} seconds` );
+} );
 ```
 
 

@@ -1,0 +1,25 @@
+# vnStat 2.9 dummy configuration
+
+DatabaseDir "/var/lib/vnstat"
+Interface "eth0"
+Interface "dummy0"
+Locale "-"
+DaemonUser "vnstat"
+DaemonGroup "vnstat"
+UpdateInterval 30
+PollInterval 5
+SaveInterval 5
+OfflineSaveInterval 30
+BandwidthDetection 1
+UseLogging 2
+LogFile "/var/log/vnstat/vnstat.log"
+PidFile "/var/run/vnstat/vnstat.pid"
+UnitMode 0
+RateUnitMode 1
+OutputStyle 3
+DefaultDecimals 2
+HourlyDecimals 2
+RxCharacter "r"
+TxCharacter "t"
+RxHourCharacter "r"
+TxHourCharacter "t"

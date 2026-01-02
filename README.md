@@ -197,6 +197,19 @@ vnstat.getStats('eth0', function(err, data) {
 });
 ```
 
+**Managing the dummy database:**
+
+```bash
+# Display information about the dummy database
+node generate-dummy-db.js info
+
+# Validate the dummy data format
+node generate-dummy-db.js validate
+
+# Run the example
+cd fixtures && node example.js
+```
+
 For detailed information about the dummy database and testing, see [fixtures/README.md](fixtures/README.md).
 
 

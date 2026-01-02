@@ -103,6 +103,14 @@ vnstat.getConfig(function(err, config) {
 });
 ```
 
+**See `fixtures/example.js` for a complete working example.**
+
+To run the example:
+```bash
+cd fixtures
+node example.js
+```
+
 ### Data Format
 
 The dummy data complies with vnStat v2.9 JSON format and includes:

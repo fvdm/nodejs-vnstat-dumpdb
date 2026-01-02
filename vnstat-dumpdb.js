@@ -91,10 +91,8 @@ function getStats ( iface, callback ) {
       return;
     }
 
-    let data;
-
     try {
-      data = JSON.parse( json );
+      json = JSON.parse( json );
     }
     catch ( e ) {
       doError( 'invalid data', e, json, callback );
@@ -102,18 +100,18 @@ function getStats ( iface, callback ) {
     }
 
     if ( iface ) {
-      const found = data.interfaces.find( ( ifc ) => ifc.id === iface );
+      const found = json.interfaces.find( ( ifc ) => ifc.id === iface );
 
       if ( found ) {
         callback( null, found );
         return;
       }
 
-      doError( 'invalid interface', { iface }, data, callback );
+      doError( 'invalid interface', { iface }, json, callback );
       return;
     }
 
-    callback( null, data.interfaces );
+    callback( null, json.interfaces );
   } );
 }
 

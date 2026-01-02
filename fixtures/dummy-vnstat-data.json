@@ -1,0 +1,256 @@
+{
+  "vnstatversion": "2.9",
+  "jsonversion": 2,
+  "interfaces": [
+    {
+      "id": "eth0",
+      "name": "eth0",
+      "alias": "",
+      "created": {
+        "date": {
+          "year": 2024,
+          "month": 1,
+          "day": 1
+        }
+      },
+      "updated": {
+        "date": {
+          "year": 2024,
+          "month": 12,
+          "day": 31
+        },
+        "time": {
+          "hour": 23,
+          "minute": 59
+        }
+      },
+      "traffic": {
+        "total": {
+          "rx": 1073741824,
+          "tx": 536870912
+        },
+        "days": [
+          {
+            "id": 0,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 31
+            },
+            "rx": 10485760,
+            "tx": 5242880
+          },
+          {
+            "id": 1,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 30
+            },
+            "rx": 20971520,
+            "tx": 10485760
+          },
+          {
+            "id": 2,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 29
+            },
+            "rx": 15728640,
+            "tx": 7864320
+          }
+        ],
+        "months": [
+          {
+            "id": 0,
+            "date": {
+              "year": 2024,
+              "month": 12
+            },
+            "rx": 536870912,
+            "tx": 268435456
+          },
+          {
+            "id": 1,
+            "date": {
+              "year": 2024,
+              "month": 11
+            },
+            "rx": 402653184,
+            "tx": 201326592
+          },
+          {
+            "id": 2,
+            "date": {
+              "year": 2024,
+              "month": 10
+            },
+            "rx": 134217728,
+            "tx": 67108864
+          }
+        ],
+        "tops": [
+          {
+            "id": 0,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 25
+            },
+            "time": {
+              "hour": 14,
+              "minute": 30
+            },
+            "rx": 52428800,
+            "tx": 26214400
+          },
+          {
+            "id": 1,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 20
+            },
+            "time": {
+              "hour": 10,
+              "minute": 15
+            },
+            "rx": 41943040,
+            "tx": 20971520
+          },
+          {
+            "id": 2,
+            "date": {
+              "year": 2024,
+              "month": 11,
+              "day": 30
+            },
+            "time": {
+              "hour": 16,
+              "minute": 45
+            },
+            "rx": 31457280,
+            "tx": 15728640
+          }
+        ],
+        "hours": [
+          {
+            "id": 0,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 31
+            },
+            "time": {
+              "hour": 23
+            },
+            "rx": 1048576,
+            "tx": 524288
+          },
+          {
+            "id": 1,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 31
+            },
+            "time": {
+              "hour": 22
+            },
+            "rx": 2097152,
+            "tx": 1048576
+          }
+        ]
+      }
+    },
+    {
+      "id": "dummy0",
+      "name": "dummy0",
+      "alias": "",
+      "created": {
+        "date": {
+          "year": 2024,
+          "month": 6,
+          "day": 15
+        }
+      },
+      "updated": {
+        "date": {
+          "year": 2024,
+          "month": 12,
+          "day": 31
+        },
+        "time": {
+          "hour": 23,
+          "minute": 59
+        }
+      },
+      "traffic": {
+        "total": {
+          "rx": 524288000,
+          "tx": 262144000
+        },
+        "days": [
+          {
+            "id": 0,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 31
+            },
+            "rx": 5242880,
+            "tx": 2621440
+          },
+          {
+            "id": 1,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 30
+            },
+            "rx": 10485760,
+            "tx": 5242880
+          }
+        ],
+        "months": [
+          {
+            "id": 0,
+            "date": {
+              "year": 2024,
+              "month": 12
+            },
+            "rx": 268435456,
+            "tx": 134217728
+          },
+          {
+            "id": 1,
+            "date": {
+              "year": 2024,
+              "month": 11
+            },
+            "rx": 201326592,
+            "tx": 100663296
+          }
+        ],
+        "tops": [
+          {
+            "id": 0,
+            "date": {
+              "year": 2024,
+              "month": 12,
+              "day": 15
+            },
+            "time": {
+              "hour": 9,
+              "minute": 0
+            },
+            "rx": 20971520,
+            "tx": 10485760
+          }
+        ],
+        "hours": []
+      }
+    }
+  ]
+}

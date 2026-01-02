@@ -57,7 +57,7 @@ function getConfig ( callback ) {
     for ( const line of lines ) {
       const trimmed = line.trim();
 
-      if ( !trimmed.startsWith( '#' ) ) {
+      if ( ! trimmed.startsWith( '#' ) ) {
         trimmed.replace( /(\w+)\s+(.+)/, ( s, key, val ) => {
           config[key] = val.startsWith( '"' ) ? val.slice( 1, -1 ) : val;
         } );
@@ -79,9 +79,11 @@ function getConfig ( callback ) {
  */
 
 function getStats ( iface, callback ) {
+  let actualIface = iface;
+
   if ( typeof iface === 'function' ) {
     callback = iface;
-    iface = set.iface;
+    actualIface = set.iface;
   }
 
   exec( `${set.bin} --json`, ( err, json, stderr ) => {
@@ -99,15 +101,15 @@ function getStats ( iface, callback ) {
       return;
     }
 
-    if ( iface ) {
-      const found = json.interfaces.find( ( ifc ) => ifc.id === iface );
+    if ( actualIface ) {
+      const found = json.interfaces.find( ( ifc ) => ifc.id === actualIface || ifc.name === actualIface );
 
       if ( found ) {
         callback( null, found );
         return;
       }
 
-      doError( 'invalid interface', { iface }, json, callback );
+      doError( 'invalid interface', { iface: actualIface }, json, callback );
       return;
     }
 

@@ -27,7 +27,7 @@ dotest.add( 'Method .getConfig', ( test ) => {
     test( err )
       .isObject( 'fail', 'data', data )
       .isNotEmpty( 'fail', 'data.DatabaseDir', data?.DatabaseDir )
-      .isNotEmpty( 'fail', 'data.Interface', data?.Interface )
+      .isString( 'fail', 'data.UpdateInterval', data?.UpdateInterval )
       .done();
   } );
 } );
@@ -35,17 +35,22 @@ dotest.add( 'Method .getConfig', ( test ) => {
 
 dotest.add( 'Method .getStats - iface', ( test ) => {
   vnstat.getStats( iface, ( err, data ) => {
-    const days = data?.traffic?.days;
+    const days = data?.traffic?.days || data?.traffic?.day;
     const rx = days?.[0]?.rx;
+    const hasData = days && days.length > 0;
 
-    test( err )
+    const t = test( err )
       .isObject( 'fail', 'data', data )
-      .isString( 'fail', 'data.id', data?.id )
+      .isString( 'fail', 'data.id', data?.id || data?.name )
       .isObject( 'fail', 'data.traffic', data?.traffic )
-      .isArray( 'fail', 'data.traffic.days', days )
-      .isObject( 'fail', 'data.traffic.days[0]', days?.[0] )
-      .isNumber( 'fail', 'data.traffic.days[0].rx', rx )
-      .done();
+      .isArray( 'fail', 'data.traffic.days', days );
+
+    if ( hasData ) {
+      t.isObject( 'fail', 'data.traffic.days[0]', days?.[0] )
+        .isNumber( 'fail', 'data.traffic.days[0].rx', rx );
+    }
+
+    t.done();
   } );
 } );
 

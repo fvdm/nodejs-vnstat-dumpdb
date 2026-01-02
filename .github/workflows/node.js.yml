@@ -35,9 +35,9 @@ jobs:
       - run: npm install
       - run: npm test
         env:
-          NODE_APP_IFACE: ${{ NODE_APP_IFACE }}
-          DOTEST_NOCOV: ${{ secrets.DOTEST_NOCOV }}
-          DOTEST_MINCOV: ${{ secrets.DOTEST_MINCOV }}
+          NODE_APP_IFACE: ${{ NODE_APP_IFACE || '' }}
+          DOTEST_NOCOV: ${{ DOTEST_NOCOV || '' }}
+          DOTEST_MINCOV: ${{ DOTEST_MINCOV || '' }}
           DOTEST_COVFUNCTIONS: 100
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master

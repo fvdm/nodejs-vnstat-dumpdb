@@ -57,7 +57,7 @@ function getConfig ( callback ) {
     for ( const line of lines ) {
       const trimmed = line.trim();
 
-      if ( ! trimmed.startsWith( '#' ) ) {
+      if ( !trimmed.startsWith( '#' ) ) {
         trimmed.replace( /(\w+)\s+(.+)/, ( s, key, val ) => {
           config[key] = val.startsWith( '"' ) ? val.slice( 1, -1 ) : val;
         } );

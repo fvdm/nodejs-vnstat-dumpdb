@@ -1,19 +1,19 @@
-var exec = require( 'child_process' ).exec;
+const { exec } = require( 'child_process' );
 
-var bin = process.env.NODE_APP_BIN || 'vnstat';
+const bin = process.env.NODE_APP_BIN ?? 'vnstat';
 
-exec( `${bin} --version`, function ( err, res ) {
+exec( `${bin} --version`, ( err, res ) => {
   if ( err ) {
     console.warn( 'Warning: vnstat not found. This package requires vnStat >= v1.13 to be installed.' );
     console.warn( 'Install vnStat from: https://github.com/vergoh/vnstat' );
     return;
   }
 
-  res.replace( /^vnStat (\d+)\.(\d+) /, function ( s, major, minor ) {
-    major = parseInt( major, 10 );
-    minor = parseInt( minor, 10 );
+  res.replace( /^vnStat (\d+)\.(\d+) /, ( s, major, minor ) => {
+    const majorNum = parseInt( major, 10 );
+    const minorNum = parseInt( minor, 10 );
 
-    if ( major > 1 || ( major === 1 && minor >= 13 ) ) {
+    if ( majorNum > 1 || ( majorNum === 1 && minorNum >= 13 ) ) {
       return;
     }
 

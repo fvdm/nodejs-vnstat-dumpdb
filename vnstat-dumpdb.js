@@ -7,9 +7,9 @@ Feedback:       https://github.com/fvdm/nodejs-vnstat-dumpdb/issues
 License:        Unlicense (see LICENSE file)
 */
 
-var exec = require( 'child_process' ).exec;
+const { exec } = require( 'child_process' );
 
-var set = {
+const set = {
   bin: 'vnstat',
   iface: null,
   config: {},
@@ -28,7 +28,7 @@ var set = {
  */
 
 function doError ( message, err, details, callback ) {
-  var error = new Error( message );
+  const error = new Error( message );
 
   error.error = err;
   error.details = details;
@@ -45,24 +45,21 @@ function doError ( message, err, details, callback ) {
  */
 
 function getConfig ( callback ) {
-  exec( `${set.bin} --showconfig`, function ( err, text ) {
-    var config = {};
-    var line;
-    var i;
-
+  exec( `${set.bin} --showconfig`, ( err, text ) => {
     if ( err ) {
       doError( 'no config', err, text, callback );
       return;
     }
 
-    text = text.split( '\n' );
+    const config = {};
+    const lines = text.split( '\n' );
 
-    for ( i = 0; i < text.length; i++ ) {
-      line = text[i].trim();
+    for ( const line of lines ) {
+      const trimmed = line.trim();
 
-      if ( line.substr( 0, 1 ) !== '#' ) {
-        line.replace( /(\w+)\s+(.+)/, function ( s, key, val ) {
-          config[key] = val.slice( 0, 1 ) === '"' ? val.slice( 1, -1 ) : val;
+      if ( ! trimmed.startsWith( '#' ) ) {
+        trimmed.replace( /(\w+)\s+(.+)/, ( s, key, val ) => {
+          config[key] = val.startsWith( '"' ) ? val.slice( 1, -1 ) : val;
         } );
       }
     }
@@ -82,22 +79,22 @@ function getConfig ( callback ) {
  */
 
 function getStats ( iface, callback ) {
-  var i;
-
   if ( typeof iface === 'function' ) {
     callback = iface;
     iface = set.iface;
   }
 
-  exec( `${set.bin} --json`, function ( err, json, stderr ) {
+  exec( `${set.bin} --json`, ( err, json, stderr ) => {
     if ( err ) {
       err.stderr = stderr;
       doError( 'command failed', err, json, callback );
       return;
     }
 
+    let data;
+
     try {
-      json = JSON.parse( json );
+      data = JSON.parse( json );
     }
     catch ( e ) {
       doError( 'invalid data', e, json, callback );
@@ -105,18 +102,18 @@ function getStats ( iface, callback ) {
     }
 
     if ( iface ) {
-      for ( i = 0; i < json.interfaces.length; i++ ) {
-        if ( json.interfaces[i].id === iface ) {
-          callback( null, json.interfaces[i] );
-          return;
-        }
+      const found = data.interfaces.find( ( ifc ) => ifc.id === iface );
+
+      if ( found ) {
+        callback( null, found );
+        return;
       }
 
-      doError( 'invalid interface', { iface }, json, callback );
+      doError( 'invalid interface', { iface }, data, callback );
       return;
     }
 
-    callback( null, json.interfaces );
+    callback( null, data.interfaces );
   } );
 }
 
@@ -130,15 +127,15 @@ function getStats ( iface, callback ) {
  * @returns {object} - Module interface methods
  */
 
-module.exports = function ( setup ) {
+module.exports = ( setup ) => {
   if ( setup instanceof Object ) {
-    set.bin = setup.bin || set.bin;
-    set.iface = setup.iface || set.iface;
+    set.bin = setup.bin ?? set.bin;
+    set.iface = setup.iface ?? set.iface;
   }
 
   return {
-    getStats: getStats,
-    getConfig: getConfig,
-    set: set,
+    getStats,
+    getConfig,
+    set,
   };
 };

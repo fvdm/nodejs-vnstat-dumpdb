@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 /*
- * Generate Dummy vnStat Database Script
+ * Validate Dummy vnStat Database Script
  *
  * This script helps you work with the dummy vnStat database for testing.
  *
  * Usage:
- *   node generate-dummy-db.js [command]
+ *   node testing/validate-dummy-db.js [command]
  *
  * Commands:
  *   validate  - Validate the dummy data JSON format
@@ -17,9 +17,9 @@
 const fs = require( 'fs' );
 const path = require( 'path' );
 
-const fixturesDir = path.join( __dirname, 'fixtures' );
-const dataFile = path.join( fixturesDir, 'dummy-vnstat-data.json' );
-const configFile = path.join( fixturesDir, 'dummy-vnstat-config.txt' );
+const testingDir = __dirname;
+const dataFile = path.join( testingDir, 'dummy-vnstat-data.json' );
+const configFile = path.join( testingDir, 'dummy-vnstat-config.txt' );
 
 const validateData = () => {
   console.log( 'Validating dummy vnStat data...\n' );
@@ -128,7 +128,7 @@ const showInfo = () => {
     console.log( 'Files:' );
     console.log( '  Data:', dataFile );
     console.log( '  Config:', configFile );
-    console.log( '  Mock binary:', path.join( fixturesDir, 'mock-vnstat' ) );
+    console.log( '  Mock binary:', path.join( testingDir, 'mock-vnstat' ) );
     console.log( '' );
   }
   catch ( err ) {
@@ -137,17 +137,17 @@ const showInfo = () => {
 };
 
 const showHelp = () => {
-  console.log( 'Generate Dummy vnStat Database Script\n' );
-  console.log( 'Usage: node generate-dummy-db.js [command]\n' );
+  console.log( 'Validate Dummy vnStat Database Script\n' );
+  console.log( 'Usage: node testing/validate-dummy-db.js [command]\n' );
   console.log( 'Commands:' );
   console.log( '  validate  - Validate the dummy data JSON format' );
   console.log( '  info      - Display information about the dummy database' );
   console.log( '  help      - Show this help message\n' );
   console.log( 'Examples:' );
-  console.log( '  node generate-dummy-db.js validate' );
-  console.log( '  node generate-dummy-db.js info\n' );
+  console.log( '  node testing/validate-dummy-db.js validate' );
+  console.log( '  node testing/validate-dummy-db.js info\n' );
   console.log( 'For testing, use the mock vnstat binary:' );
-  console.log( '  NODE_APP_BIN=./fixtures/mock-vnstat npm test\n' );
+  console.log( '  NODE_APP_BIN=./testing/mock-vnstat npm test\n' );
 };
 
 // Parse command line arguments

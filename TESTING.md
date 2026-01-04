@@ -14,30 +14,30 @@ The dummy database includes:
 
 ```js
 // Set environment variable before running tests
-NODE_APP_BIN=./fixtures/mock-vnstat npm test
+NODE_APP_BIN=./testing/mock-vnstat npm test
 
 // Or use it directly in your code
-var vnstat = require('vnstat-dumpdb')({
-  bin: './fixtures/mock-vnstat'
-});
+const vnstat = require( 'vnstat-dumpdb' )( {
+  bin: './testing/mock-vnstat',
+} );
 
-vnstat.getStats('eth0', function(err, data) {
+vnstat.getStats( 'eth0', ( err, data ) => {
   // Test with dummy data
-  console.log(data);
-});
+  console.log( data );
+} );
 ```
 
 **Managing the dummy database:**
 
 ```bash
 # Display information about the dummy database
-node generate-dummy-db.js info
+node testing/validate-dummy-db.js info
 
 # Validate the dummy data format
-node generate-dummy-db.js validate
+node testing/validate-dummy-db.js validate
 
 # Run the example
-cd fixtures && node example.js
+cd testing && node example.js
 ```
 
-For detailed information about the dummy database and testing, see [fixtures/README.md](fixtures/README.md).
+For detailed information about the dummy database and testing, see [testing/README.md](testing/README.md).

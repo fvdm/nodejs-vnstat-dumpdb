@@ -37,13 +37,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
  
       - run: npm install
+        env:
+          NODE_APP_BIN: ${{ secrets.NODE_APP_BIN }}
  
-      - run: |
-          NODE_APP_IFACE=${NODE_APP_IFACE:-''}
-          DOTEST_NOCOV=${DOTEST_NOCOV:-''}
-          DOTEST_MINCOV=${DOTEST_MINCOV:-''}
-          DOTEST_COVFUNCTIONS=100
-          npm test
+      - run: npm test
+        env:
+          NODE_APP_BIN: ${{ secrets.NODE_APP_BIN }}
+          NODE_APP_IFACE: ${{ secrets.NODE_APP_IFACE }}
+          DOTEST_NOCOV: ${{ secrets.DOTEST_NOCOV }}
+          DOTEST_MINCOV: ${{ secrets.DOTEST_MINCOV }}
+          DOTEST_COVFUNCTIONS: 100
   
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master

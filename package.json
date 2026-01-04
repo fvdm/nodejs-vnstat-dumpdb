@@ -5,7 +5,7 @@
     "url": "https://frankl.in"
   },
   "name": "vnstat-dumpdb",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Get vnStat network traffic and configuration",
   "repository": {
     "type": "git",

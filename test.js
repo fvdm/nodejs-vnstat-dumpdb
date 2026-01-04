@@ -55,7 +55,7 @@ dotest.add( 'Method .getStats - iface', ( test ) => {
 
 
 dotest.add( 'Method .getStats - all', ( test ) => {
-  vnstat.getStats( false, ( err, data ) => {
+  vnstat.getStats( ( err, data ) => {
     test( err )
       .isArray( 'fail', 'data', data )
       .done();

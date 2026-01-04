@@ -83,7 +83,7 @@ function getStats ( iface, callback ) {
 
   if ( typeof iface === 'function' ) {
     callback = iface;
-    actualIface = set.iface;
+    actualIface = false;
   }
 
   exec( `${set.bin} --json`, ( err, json, stderr ) => {

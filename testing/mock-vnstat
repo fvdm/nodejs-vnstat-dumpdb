@@ -2,50 +2,50 @@
 
 /*
  * Mock vnstat binary for testing
- * 
+ *
  * This script simulates the vnstat command for testing purposes.
  * It returns dummy data instead of real network statistics.
- * 
+ *
  * Usage:
  *   Set NODE_APP_BIN to point to this script when running tests:
- *   NODE_APP_BIN=./fixtures/mock-vnstat npm test
+ *   NODE_APP_BIN=./testing/mock-vnstat npm test
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require( 'fs' );
+const path = require( 'path' );
 
-const args = process.argv.slice(2);
+const args = process.argv.slice( 2 );
 
 // Handle --version flag
-if (args.includes('--version')) {
-  console.log('vnStat 2.9 (mock)');
-  console.log('by Franklin van de Meent (mock version for testing)');
-  process.exit(0);
+if ( args.includes( '--version' ) ) {
+  console.log( 'vnStat 2.9 (mock)' );
+  console.log( 'by Franklin van de Meent (mock version for testing)' );
+  process.exit( 0 );
 }
 
 // Handle --showconfig flag
-if (args.includes('--showconfig')) {
-  const configPath = path.join(__dirname, 'dummy-vnstat-config.txt');
-  const config = fs.readFileSync(configPath, 'utf8');
-  console.log(config);
-  process.exit(0);
+if ( args.includes( '--showconfig' ) ) {
+  const configPath = path.join( __dirname, 'dummy-vnstat-config.txt' );
+  const config = fs.readFileSync( configPath, 'utf8' );
+  console.log( config );
+  process.exit( 0 );
 }
 
 // Handle --json flag
-if (args.includes('--json')) {
-  const dataPath = path.join(__dirname, 'dummy-vnstat-data.json');
-  const data = fs.readFileSync(dataPath, 'utf8');
-  console.log(data);
-  process.exit(0);
+if ( args.includes( '--json' ) ) {
+  const dataPath = path.join( __dirname, 'dummy-vnstat-data.json' );
+  const data = fs.readFileSync( dataPath, 'utf8' );
+  console.log( data );
+  process.exit( 0 );
 }
 
 // Default help output
-console.log('vnStat 2.9 (mock) - Mock version for testing');
-console.log('');
-console.log('Supported flags:');
-console.log('  --version     Display version information');
-console.log('  --json        Output statistics in JSON format');
-console.log('  --showconfig  Display current configuration');
-console.log('');
-console.log('This is a mock script. Set NODE_APP_BIN to this script path for testing.');
-process.exit(0);
+console.log( 'vnStat 2.9 (mock) - Mock version for testing' );
+console.log( '' );
+console.log( 'Supported flags:' );
+console.log( '  --version     Display version information' );
+console.log( '  --json        Output statistics in JSON format' );
+console.log( '  --showconfig  Display current configuration' );
+console.log( '' );
+console.log( 'This is a mock script. Set NODE_APP_BIN to this script path for testing.' );
+process.exit( 0 );

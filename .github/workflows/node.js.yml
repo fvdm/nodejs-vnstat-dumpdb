@@ -42,7 +42,7 @@ jobs:
  
       - run: npm test
         env:
-          NODE_APP_BIN: ${{ secrets.NODE_APP_BIN }}
+          NODE_APP_BIN: './testing/mock-vnstat'
           NODE_APP_IFACE: ${{ secrets.NODE_APP_IFACE }}
           DOTEST_NOCOV: ${{ secrets.DOTEST_NOCOV }}
           DOTEST_MINCOV: ${{ secrets.DOTEST_MINCOV }}

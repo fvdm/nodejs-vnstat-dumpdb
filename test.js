@@ -4,16 +4,15 @@ const app = require( './' );
 // Setup
 // $ NODE_APP_IFACE=eth0 npm test
 const config = {
-  bin: process.env.NODE_APP_BIN ?? null,
-  iface: process.env.NODE_APP_IFACE ?? 'eth0',
+  bin: process.env.NODE_APP_BIN || './testing/mock-vnstat',
+  iface: process.env.NODE_APP_IFACE || 'eth0',
 };
-
-dotest.log( 'object', { config } );
 
 let vnstat = app( config );
 
 dotest.add( 'Module', ( test ) => {
   test()
+    .object( 'object', { config } )
     .isFunction( 'fail', 'exports', app )
     .isObject( 'fail', 'interface', vnstat )
     .isFunction( 'fail', '.getConfig', vnstat?.getConfig )

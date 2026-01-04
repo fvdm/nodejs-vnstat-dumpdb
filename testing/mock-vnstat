@@ -41,11 +41,11 @@ if ( args.includes( '--json' ) ) {
 
 // Default help output
 console.log( 'vnStat 2.9 (mock) - Mock version for testing' );
-console.log( '' );
+console.log();
 console.log( 'Supported flags:' );
 console.log( '  --version     Display version information' );
 console.log( '  --json        Output statistics in JSON format' );
 console.log( '  --showconfig  Display current configuration' );
-console.log( '' );
+console.log();
 console.log( 'This is a mock script. Set NODE_APP_BIN to this script path for testing.' );
 process.exit( 0 );

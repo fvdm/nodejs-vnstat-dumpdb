@@ -27,7 +27,7 @@ vnstat.getStats( 'eth0', ( err, data ) => {
   console.log( '   Days tracked:', data.traffic.days.length );
   console.log( '   Months tracked:', data.traffic.months.length );
   console.log( '   Top traffic days:', data.traffic.tops.length );
-  console.log( '' );
+  console.log();
 
   // Example 2: Get stats for all interfaces
   console.log( '2. Getting stats for all interfaces:' );
@@ -42,7 +42,7 @@ vnstat.getStats( 'eth0', ( err, data ) => {
       const totalMB = ( iface.traffic.total.rx + iface.traffic.total.tx ) / 1024 / 1024;
       console.log( `   - ${iface.id}: ${totalMB.toFixed( 2 )} MB total` );
     } );
-    console.log( '' );
+    console.log();
 
     // Example 3: Get vnStat configuration
     console.log( '3. Getting vnStat configuration:' );
@@ -56,7 +56,7 @@ vnstat.getStats( 'eth0', ( err, data ) => {
       console.log( '   Database directory:', config.DatabaseDir );
       console.log( '   Daemon user:', config.DaemonUser );
       console.log( '   Daemon group:', config.DaemonGroup );
-      console.log( '' );
+      console.log();
 
       console.log( '✓ All examples completed successfully!' );
     } );

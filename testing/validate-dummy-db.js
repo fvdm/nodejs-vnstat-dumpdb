@@ -78,13 +78,13 @@ const validateData = () => {
     if ( errors.length > 0 ) {
       console.log( '❌ Validation failed with errors:\n' );
       errors.forEach( ( err ) => console.log( `  - ${err}` ) );
-      console.log( '' );
+      console.log();
     }
 
     if ( warnings.length > 0 ) {
       console.log( '⚠️  Warnings:\n' );
       warnings.forEach( ( warn ) => console.log( `  - ${warn}` ) );
-      console.log( '' );
+      console.log();
     }
 
     if ( errors.length === 0 && warnings.length === 0 ) {
@@ -112,7 +112,7 @@ const showInfo = () => {
     console.log( 'vnStat Version:', data.vnstatversion );
     console.log( 'JSON Version:', data.jsonversion );
     console.log( 'Interfaces:', data.interfaces.length );
-    console.log( '' );
+    console.log();
 
     data.interfaces.forEach( ( iface ) => {
       console.log( 'Interface:', iface.id );
@@ -122,14 +122,14 @@ const showInfo = () => {
       console.log( '  Months:', iface.traffic.months.length );
       console.log( '  Tops:', iface.traffic.tops.length );
       console.log( '  Hours:', iface.traffic.hours.length );
-      console.log( '' );
+      console.log();
     } );
 
     console.log( 'Files:' );
     console.log( '  Data:', dataFile );
     console.log( '  Config:', configFile );
     console.log( '  Mock binary:', path.join( testingDir, 'mock-vnstat' ) );
-    console.log( '' );
+    console.log();
   }
   catch ( err ) {
     console.error( 'Error reading data:', err.message );

@@ -9,8 +9,9 @@ const config = {
 
 const iface = process.env.NODE_APP_IFACE ?? 'eth0';
 
-let vnstat = app( config );
+dotest.object( config, iface );
 
+let vnstat = app( config );
 
 dotest.add( 'Module', ( test ) => {
   test()

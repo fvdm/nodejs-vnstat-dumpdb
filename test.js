@@ -12,7 +12,7 @@ let vnstat = app( config );
 
 dotest.add( 'Module', ( test ) => {
   test()
-    .object( 'object', { config } )
+    .object( { config } )
     .isFunction( 'fail', 'exports', app )
     .isObject( 'fail', 'interface', vnstat )
     .isFunction( 'fail', '.getConfig', vnstat?.getConfig )

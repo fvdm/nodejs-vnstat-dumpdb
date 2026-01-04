@@ -7,12 +7,12 @@ Feedback:       https://github.com/fvdm/nodejs-vnstat-dumpdb/issues
 License:        Unlicense (see LICENSE file)
 */
 
-var exec = require ('child_process') .exec;
+const { exec } = require( 'child_process' );
 
-var set = {
+const set = {
   bin: 'vnstat',
   iface: null,
-  config: {}
+  config: {},
 };
 
 
@@ -27,12 +27,12 @@ var set = {
  * @returns {void}
  */
 
-function doError (message, err, details, callback) {
-  var error = new Error (message);
+function doError ( message, err, details, callback ) {
+  const error = new Error( message );
 
   error.error = err;
   error.details = details;
-  callback (error);
+  callback( error );
 }
 
 
@@ -44,31 +44,28 @@ function doError (message, err, details, callback) {
  * @returns {void}
  */
 
-function getConfig (callback) {
-  exec (set.bin + ' --showconfig', function (err, text) {
-    var config = {};
-    var line;
-    var i;
-
-    if (err) {
-      doError ('no config', err, text, callback);
+function getConfig ( callback ) {
+  exec( `${set.bin} --showconfig`, ( err, text ) => {
+    if ( err ) {
+      doError( 'no config', err, text, callback );
       return;
     }
 
-    text = text.split ('\n');
+    const config = {};
+    const lines = text.split( '\n' );
 
-    for (i = 0; i < text.length; i++) {
-      line = text [i] .trim ();
+    for ( const line of lines ) {
+      const trimmed = line.trim();
 
-      if (line.substr (0, 1) !== '#') {
-        line.replace (/(\w+)\s+(.+)/, function (s, key, val) {
-          config [key] = val.slice (0, 1) === '"' ? val.slice (1, -1) : val;
-        });
+      if ( ! trimmed.startsWith( '#' ) ) {
+        trimmed.replace( /(\w+)\s+(.+)/, ( s, key, val ) => {
+          config[key] = val.startsWith( '"' ) ? val.slice( 1, -1 ) : val;
+        } );
       }
     }
 
-    callback (null, config);
-  });
+    callback( null, config );
+  } );
 }
 
 
@@ -81,42 +78,43 @@ function getConfig (callback) {
  * @returns {void}
  */
 
-function getStats (iface, callback) {
-  var i;
+function getStats ( iface, callback ) {
+  let actualIface = iface;
 
-  if (typeof iface === 'function') {
+  if ( typeof iface === 'function' ) {
     callback = iface;
-    iface = set.iface;
+    actualIface = set.iface || false;
   }
 
-  exec (set.bin + ' --json', function (err, json, stderr) {
-    if (err) {
+  exec( `${set.bin} --json`, ( err, json, stderr ) => {
+    if ( err ) {
       err.stderr = stderr;
-      doError ('command failed', err, json, callback);
+      doError( 'command failed', err, json, callback );
       return;
     }
 
     try {
-      json = JSON.parse (json);
-    } catch (e) {
-      doError ('invalid data', e, json, callback);
+      json = JSON.parse( json );
+    }
+    catch ( e ) {
+      doError( 'invalid data', e, json, callback );
       return;
     }
 
-    if (iface) {
-      for (i = 0; i < json.interfaces.length; i++) {
-        if (json.interfaces [i] .id === iface) {
-          callback (null, json.interfaces [i]);
-          return;
-        }
+    if ( actualIface ) {
+      const found = json.interfaces.find( ( ifc ) => ifc.id === actualIface || ifc.name === actualIface );
+
+      if ( found ) {
+        callback( null, found );
+        return;
       }
 
-      doError ('invalid interface', { iface }, json, callback);
+      doError( 'invalid interface', { iface: actualIface }, json, callback );
       return;
     }
 
-    callback (null, json.interfaces);
-  });
+    callback( null, json.interfaces );
+  } );
 }
 
 
@@ -129,15 +127,15 @@ function getStats (iface, callback) {
  * @returns {object} - Module interface methods
  */
 
-module.exports = function (setup) {
-  if (setup instanceof Object) {
-    set.bin = setup.bin || set.bin;
-    set.iface = setup.iface || set.iface;
+module.exports = ( setup ) => {
+  if ( setup instanceof Object ) {
+    set.bin = setup.bin ?? set.bin;
+    set.iface = setup.iface ?? set.iface;
   }
 
   return {
-    getStats: getStats,
-    getConfig: getConfig,
-    set: set
+    getStats,
+    getConfig,
+    set,
   };
 };

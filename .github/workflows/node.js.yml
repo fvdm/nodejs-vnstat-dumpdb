@@ -28,17 +28,26 @@ jobs:
         node-version: ${{ fromJson(needs.lts_versions.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v6
+
+      - run: "sudo apt-get update && sudo apt-get install -y vnstat"
+ 
       - name: Test on Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+ 
       - run: npm install
+        env:
+          NODE_APP_BIN: ${{ secrets.NODE_APP_BIN }}
+ 
       - run: npm test
         env:
-          NODE_APP_IFACE: ${{ NODE_APP_IFACE }}
+          NODE_APP_BIN: './testing/mock-vnstat'
+          NODE_APP_IFACE: ${{ secrets.NODE_APP_IFACE }}
           DOTEST_NOCOV: ${{ secrets.DOTEST_NOCOV }}
           DOTEST_MINCOV: ${{ secrets.DOTEST_MINCOV }}
           DOTEST_COVFUNCTIONS: 100
+  
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         if: always()

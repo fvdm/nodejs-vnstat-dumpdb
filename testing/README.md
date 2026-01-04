@@ -18,26 +18,26 @@ The mock vnstat binary is a Node.js script that simulates the behavior of the re
 
 ```bash
 # Run tests with the mock binary
-NODE_APP_BIN=./fixtures/mock-vnstat npm test
+NODE_APP_BIN=./testing/mock-vnstat npm test
 
 # Or set it for a single command
-NODE_APP_BIN=./fixtures/mock-vnstat node your-script.js
+NODE_APP_BIN=./testing/mock-vnstat node your-script.js
 ```
 
 #### Method 2: Pass bin option when requiring the module
 
 ```javascript
-const vnstat = require('vnstat-dumpdb')({
-  bin: './fixtures/mock-vnstat'
-});
+const vnstat = require( 'vnstat-dumpdb' )( {
+  bin: './testing/mock-vnstat',
+} );
 
-vnstat.getStats('eth0', function(err, data) {
-  if (err) {
-    console.error(err);
+vnstat.getStats( 'eth0', ( err, data ) => {
+  if ( err ) {
+    console.error( err );
     return;
   }
-  console.log(data);
-});
+  console.log( data );
+} );
 ```
 
 ### Supported Interfaces
@@ -61,53 +61,53 @@ The dummy database includes two network interfaces:
 
 ```javascript
 // Initialize with mock binary
-const vnstat = require('vnstat-dumpdb')({
-  bin: './fixtures/mock-vnstat'
-});
+const vnstat = require( 'vnstat-dumpdb' )( {
+  bin: './testing/mock-vnstat',
+} );
 
 // Get stats for eth0 interface
-vnstat.getStats('eth0', function(err, data) {
-  if (err) {
-    console.error(err);
+vnstat.getStats( 'eth0', ( err, data ) => {
+  if ( err ) {
+    console.error( err );
     return;
   }
-  
-  console.log('Interface:', data.id);
-  console.log('Total RX:', data.traffic.total.rx);
-  console.log('Total TX:', data.traffic.total.tx);
-  console.log('Last 3 days:', data.traffic.days);
-});
+
+  console.log( 'Interface:', data.id );
+  console.log( 'Total RX:', data.traffic.total.rx );
+  console.log( 'Total TX:', data.traffic.total.tx );
+  console.log( 'Last 3 days:', data.traffic.days );
+} );
 
 // Get all interfaces
-vnstat.getStats(function(err, interfaces) {
-  if (err) {
-    console.error(err);
+vnstat.getStats( ( err, interfaces ) => {
+  if ( err ) {
+    console.error( err );
     return;
   }
-  
-  console.log('Total interfaces:', interfaces.length);
-  interfaces.forEach(function(iface) {
-    console.log('- ' + iface.id);
-  });
-});
+
+  console.log( 'Total interfaces:', interfaces.length );
+  interfaces.forEach( ( iface ) => {
+    console.log( `- ${iface.id}` );
+  } );
+} );
 
 // Get vnStat configuration
-vnstat.getConfig(function(err, config) {
-  if (err) {
-    console.error(err);
+vnstat.getConfig( ( err, config ) => {
+  if ( err ) {
+    console.error( err );
     return;
   }
-  
-  console.log('Update interval:', config.UpdateInterval, 'seconds');
-  console.log('Database directory:', config.DatabaseDir);
-});
+
+  console.log( `Update interval: ${config.UpdateInterval} seconds` );
+  console.log( 'Database directory:', config.DatabaseDir );
+} );
 ```
 
-**See `fixtures/example.js` for a complete working example.**
+**See `testing/example.js` for a complete working example.**
 
 To run the example:
 ```bash
-cd fixtures
+cd testing
 node example.js
 ```
 

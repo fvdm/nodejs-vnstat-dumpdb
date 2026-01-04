@@ -5,11 +5,10 @@ const app = require( './' );
 // $ NODE_APP_IFACE=eth0 npm test
 const config = {
   bin: process.env.NODE_APP_BIN ?? null,
+  iface: process.env.NODE_APP_IFACE ?? 'eth0',
 };
 
-const iface = process.env.NODE_APP_IFACE ?? 'eth0';
-
-dotest.object( config, iface );
+dotest.log( 'object', { config } );
 
 let vnstat = app( config );
 
@@ -35,7 +34,7 @@ dotest.add( 'Method .getConfig', ( test ) => {
 
 
 dotest.add( 'Method .getStats - iface', ( test ) => {
-  vnstat.getStats( iface, ( err, data ) => {
+  vnstat.getStats( config.iface, ( err, data ) => {
     const days = data?.traffic?.days || data?.traffic?.day;
     const rx = days?.[0]?.rx;
     const hasData = days && days.length > 0;

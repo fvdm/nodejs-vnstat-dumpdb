@@ -1,17 +1,16 @@
-vnstat-dumpdb
-=============
+# vnstat-dumpdb
 
 Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
 
-[![npm](https://img.shields.io/npm/v/vnstat-dumpdb.svg?maxAge=3600)](https://github.com/fvdm/nodejs-vnstat-dumpdb/blob/master/CHANGELOG.md)
-[![Build Status](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb.svg?branch=master)](https://travis-ci.org/fvdm/nodejs-vnstat-dumpdb)
-[![Dependency Status](https://gemnasium.com/badges/github.com/fvdm/nodejs-vnstat-dumpdb.svg)](https://gemnasium.com/github.com/fvdm/nodejs-vnstat-dumpdb#runtime-dependencies)
+[![npm](https://img.shields.io/npm/v/vnstat-dumpdb.svg?maxAge=3600)](https://www.npmjs.com/package/vnstat-dumpdb?activeTab=versions)
+[![Build Status](https://github.com/fvdm/nodejs-vnstat-dumpdb/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/fvdm/nodejs-vnstat-dumpdb/actions/workflows/node.js.yml)
 [![Coverage Status](https://coveralls.io/repos/github/fvdm/nodejs-vnstat-dumpdb/badge.svg?branch=master)](https://coveralls.io/github/fvdm/nodejs-vnstat-dumpdb?branch=master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/fvdm/nodejs-vnstat-dumpdb.svg)](https://greenkeeper.io/)
+
+* [Changelog](https://github.com/fvdm/nodejs-vnstat-dumpdb/releases)
+* [Node.js](https://nodejs.org)
 
 
-Example
--------
+## Example
 
 ```js
 const vnstat = require( 'vnstat-dumpdb' )();
@@ -38,27 +37,24 @@ vnstat.getConfig( ( err, config ) => {
 ```
 
 
-Installation
-------------
+## Installation
 
 Make sure you have **vnStat v1.13** or later.
 
 `npm install vnstat-dumpdb`
 
 
-Configuration
--------------
+## Configuration
 
 The module loads as a function to override the defaults:
 
-setting | type   | required | default | description
---------|--------|----------|---------|----------------------
-bin     | string | no       | vnstat  | Path to vnstat binary
-iface   | string | no       |         | i.e. `eth0` or `false` to list all
+setting | type   | default | description
+--------|--------|---------|----------------------
+[bin]   | string | vnstat  | Path to vnstat binary
+[iface] | string | `false` | i.e. `eth0` or `false` to list all
 
 
-Callback & errors
------------------
+## Callback & errors
 
 Each method below takes a callback _function_ which gets two arguments:
 
@@ -88,8 +84,7 @@ invalid interface | `iface` is invalid or not set up  |
 
 
 
-getStats ( [iface], callback )
---------
+## getStats ( [iface], callback )
 
 Get statistics for one, multiple or all interfaces.
 
@@ -151,8 +146,7 @@ vnstat.getStats( 'en1', console.log );
 ```
 
 
-getConfig ( callback )
----------
+## getConfig ( callback )
 
 Get vnStat configuration.
 
@@ -168,8 +162,7 @@ vnstat.getConfig( ( err, config ) => {
 ```
 
 
-Unlicense
----------
+## Unlicense
 
 This is free and unencumbered software released into the public domain.
 
@@ -194,12 +187,11 @@ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
-For more information, please refer to <http://unlicense.org>
+For more information, please refer to <https://unlicense.org>
 
 
 Author
 ------
 
-[Franklin van de Meent](https://frankl.in)
-
-[![Buy me a coffee](https://frankl.in/u/kofi/kofi-readme.png)](https://ko-fi.com/franklin)
+[Franklin](https://frankl.in)
+| [Buy me a coffee](https://ko-fi.com/franklin)

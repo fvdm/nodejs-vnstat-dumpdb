@@ -28,8 +28,6 @@ jobs:
         node-version: ${{ fromJson(needs.lts_versions.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v6
-
-      - run: "sudo apt-get update && sudo apt-get install -y vnstat"
  
       - name: Test on Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6

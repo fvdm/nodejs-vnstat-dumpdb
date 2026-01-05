@@ -12,6 +12,8 @@ Get network traffic statistics from [vnStat](https://github.com/vergoh/vnstat).
 
 ## Example
 
+### Callback style
+
 ```js
 const vnstat = require( 'vnstat-dumpdb' )();
 
@@ -36,6 +38,28 @@ vnstat.getConfig( ( err, config ) => {
 } );
 ```
 
+### Promise style
+
+```js
+const vnstat = require( 'vnstat-dumpdb' )();
+
+// Get traffic per day with async/await
+async function getTraffic () {
+  try {
+    const data = await vnstat.getStats( 'eth0' );
+    console.log( data.traffic.days );
+
+    const config = await vnstat.getConfig();
+    console.log( `Interfaces updating every ${config.UpdateInterval} minutes` );
+  }
+  catch ( err ) {
+    console.log( err );
+  }
+}
+
+getTraffic();
+```
+
 
 ## Installation
 
@@ -56,7 +80,11 @@ setting | type   | default | description
 
 ## Callback & errors
 
-Each method below takes a callback _function_ which gets two arguments:
+Each method supports both **callback** and **Promise** patterns:
+
+### Callback style
+
+Each method takes an optional callback _function_ which gets two arguments:
 
 * `err` - Instance of `Error` or `null`
 * `data` - Result `object` or not set when error
@@ -73,6 +101,26 @@ const myCallback = ( err, data ) => {
 };
 ```
 
+### Promise style
+
+If no callback is provided, the method returns a `Promise`:
+
+```js
+// Using async/await
+try {
+  const data = await vnstat.getConfig();
+  console.log( data );
+}
+catch ( err ) {
+  console.log( err );
+}
+
+// Using .then() / .catch()
+vnstat.getConfig()
+  .then( ( data ) => console.log( data ) )
+  .catch( ( err ) => console.log( err ) );
+```
+
 
 #### Errors
 
@@ -84,17 +132,20 @@ invalid interface | `iface` is invalid or not set up  |
 
 
 
-## getStats ( [iface], callback )
+## getStats ( [iface], [callback] )
 
 Get statistics for one, multiple or all interfaces.
 
-* One: `vnstat.getStats( 'eth0', callback )`
-* All: `vnstat.getStats( false, callback )`
+* One: `vnstat.getStats( 'eth0', callback )` or `await vnstat.getStats( 'eth0' )`
+* All: `vnstat.getStats( false, callback )` or `await vnstat.getStats()`
 
 
 ```js
-// Get traffic for interface en1
+// Get traffic for interface en1 (callback)
 vnstat.getStats( 'en1', console.log );
+
+// Get traffic for interface en1 (promise)
+const data = await vnstat.getStats( 'en1' );
 
 // Output
 { id: 'en1',
@@ -146,11 +197,12 @@ vnstat.getStats( 'en1', console.log );
 ```
 
 
-## getConfig ( callback )
+## getConfig ( [callback] )
 
 Get vnStat configuration.
 
 ```js
+// Callback style
 vnstat.getConfig( ( err, config ) => {
   if ( err ) {
     console.log( err );
@@ -159,6 +211,10 @@ vnstat.getConfig( ( err, config ) => {
 
   console.log( `Interfaces updating every ${config.UpdateInterval} seconds` );
 } );
+
+// Promise style
+const config = await vnstat.getConfig();
+console.log( `Interfaces updating every ${config.UpdateInterval} seconds` );
 ```
 
 

@@ -127,15 +127,20 @@ function getStats ( iface, callback ) {
  * @returns  {object}                      Module interface methods
  */
 
-module.exports = ( setup ) => {
-  if ( setup instanceof Object ) {
-    set.bin = setup.bin ?? set.bin;
-    set.iface = setup.iface ?? set.iface;
-  }
+module.exports = ( {
+
+  bin = set.bin,
+  iface = set.iface,
+ 
+} = {} ) => {
+
+  set.bin = bin;
+  set.iface = iface;
 
   return {
     getStats,
     getConfig,
     set,
   };
+ 
 };

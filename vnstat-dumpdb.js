@@ -37,6 +37,39 @@ function doError ( message, err, details, callback ) {
 
 
 /**
+ * Helper to promisify a function that uses callbacks
+ *
+ * @param     {function}  fn    The function to promisify
+ * @returns   {function}        Wrapped function that returns a Promise if no callback
+ */
+
+function promisify ( fn ) {
+  return function ( ...args ) {
+    const callback = args[args.length - 1];
+
+    // If last argument is a function, use callback style
+    if ( typeof callback === 'function' ) {
+      return fn.apply( this, args );
+    }
+
+    // Otherwise, return a Promise
+    return new Promise( ( resolve, reject ) => {
+      args.push( ( err, data ) => {
+        if ( err ) {
+          reject( err );
+        }
+        else {
+          resolve( data );
+        }
+      } );
+
+      fn.apply( this, args );
+    } );
+  };
+}
+
+
+/**
  * Get vnStat config
  *
  * @param     {function}  callback  `(err, data)`
@@ -138,8 +171,8 @@ module.exports = ( {
   set.iface = iface;
 
   return {
-    getStats,
-    getConfig,
+    getStats: promisify( getStats ),
+    getConfig: promisify( getConfig ),
     set,
   };
 

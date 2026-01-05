@@ -19,12 +19,12 @@ const set = {
 /**
  * Make and callback an error
  *
- * @callback callback
- * @param message {string} - Error.message
- * @param err {Error, null} - Error.error
- * @param details {mixed} - Error.details
- * @param callback {function} - `function (err) {}`
- * @returns {void}
+ * @param     {string}      message   Error.message
+ * @param     {Error|null}  err       Error.error
+ * @param     {mixed}       details   Error.details
+ * @param     {functions}   callback  `(err)`
+ * @returns   {void}
+ * @callback  callback
  */
 
 function doError ( message, err, details, callback ) {
@@ -39,9 +39,9 @@ function doError ( message, err, details, callback ) {
 /**
  * Get vnStat config
  *
- * @callback callback
- * @param callback {function} - `function (err, data) {}`
- * @returns {void}
+ * @param     {function}  callback  `(err, data)`
+ * @returns   {void}
+ * @callback  callback
  */
 
 function getConfig ( callback ) {
@@ -72,10 +72,10 @@ function getConfig ( callback ) {
 /**
  * Get stats database
  *
- * @callback callback
- * @param [iface] {string} - Limit data to one interface
- * @param callback {function} - `function (err, data) {}`
- * @returns {void}
+ * @param     {string}    [iface]   Limit data to one interface
+ * @param     {function}  callback  `(err, data)`
+ * @returns   {void}
+ * @callback  callback
  */
 
 function getStats ( iface, callback ) {
@@ -121,10 +121,10 @@ function getStats ( iface, callback ) {
 /**
  * Configuration
  *
- * @param [setup] {object}
- * @param [setup.bin] {string=vnstat} - Command of or path to vnstat binary
- * @param [setup.iface] {string} - Select interface, defaults to all (null)
- * @returns {object} - Module interface methods
+ * @param    {object}  [setup]
+ * @param    {string}  [setup.bin=vnstat]  Command of or path to vnstat binary
+ * @param    {string}  [setup.iface]       Select interface, defaults to all (false)
+ * @returns  {object}                      Module interface methods
  */
 
 module.exports = ( setup ) => {

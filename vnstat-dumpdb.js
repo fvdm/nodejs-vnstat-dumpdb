@@ -131,7 +131,7 @@ module.exports = ( {
 
   bin = set.bin,
   iface = set.iface,
- 
+
 } = {} ) => {
 
   set.bin = bin;
@@ -142,5 +142,5 @@ module.exports = ( {
     getConfig,
     set,
   };
- 
+
 };
